@@ -11,9 +11,9 @@
 
     }
 
-    void alu::sumaIEE()
+    numero alu::sumaIEE()
     {
-
+        numero resultado; // Aqui se almacenara el resultado d la suma
 
 
         /*EJEMPLO DE USO
