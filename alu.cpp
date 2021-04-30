@@ -21,24 +21,74 @@
          * Consulta del exponente en en binario (bitset<8>) ->> numeroA.getExpBit();
          *
          * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
-         *
+         */
 
         /*Rellenar*/
+        int signoA = numeroA.getSing();
+        int signoB = numeroB.getSing();
+        std::bitset<8> exponenteA_Bit = numeroA.getExpoBit();
+        std::bitset<8> exponenteB_Bit = numeroB.getExpoBit();
+        int exponenteA = numeroA.getExpo();
+        int exponenteB = numeroB.getExpo();
+        int parteFracA = numeroA.getPartFrac();
+        int parteFracB = numeroB.getPartFrac();
+        std::bitset<24> mantisaA = numeroA.getMantisa();
+        std::bitset<24> mantisaB = numeroB.getMantisa();
 
+        int exponente_Suma = 0;
+
+        int i = 0;
         /*Paso 1*/
-
+        int g = 0, r = 0, st = 0;
+        int n = 24;
+        bool Ope_Inter = false;
+        bool Comple_P  = false;
+        int d;
+        std::bitset<24> P;
         /*Paso 2*/
-
+        if(exponenteA<exponenteB){
+            signoA = numeroB.getSing();
+            signoB = numeroA.getSing();
+            exponenteA_Bit = numeroB.getExpoBit();
+            exponenteB_Bit = numeroA.getExpoBit();
+            exponenteA = numeroB.getExpo();
+            exponenteB = numeroA.getExpo();
+            parteFracA = numeroB.getPartFrac();
+            parteFracB = numeroA.getPartFrac();
+            mantisaA = numeroB.getMantisa();
+            mantisaB = numeroA.getMantisa();
+        }
         /*Paso 3*/
-
+        exponente_Suma = exponenteA;
+        d=exponenteA-exponenteB;
         /*Paso 4*/
-
+        if(signoA!=signoB){
+            mantisaB = complemento2(mantisaB);
+        }
         /*Paso 5*/
-
+        P=mantisaB;
         /*Paso 6*/
 
+        if(d-1 < 24 && d-1 >= 0){
+            g=P[d-1];
+        }
+        if(d-2 < 24 && d-2 >= 0){
+            g=P[d-2];
+        }
+        if(d-3 < 24 && d-3 >= 0){
+            for(i=d;i<P.size()-3;i++){
+                if(P[d-i]==1){
+                    st=1;
+                    break;
+                }
+            }
+        }
         /*Paso 7*/
-
+        if(signoA!=signoB){
+            P = desplazarDerecha(P,d,1);
+        }else{
+            P = desplazarDerecha(P,d,0);
+        }
         /*Paso 8*/
 
         /*Paso 9*/
