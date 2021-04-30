@@ -116,6 +116,9 @@
     std::bitset<23> alu::normalizaMantisa(std::bitset<24> mantisa)
     {
         /*Rellenar metodo*/
+        while(mantisa[23]!=1){
+            desplazarIzquierda(mantisa,1,0);
+        }
 
     }
 
