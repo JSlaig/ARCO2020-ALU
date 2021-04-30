@@ -106,6 +106,12 @@
         return sumaBinaria(p,uno);
 
     }
+    int alu::acarreoUno(std::bitset<24> p)
+    {
+        std::bitset<24> uno (1);
+        return acarreoBinario(p,uno);
+
+    }
 
     std::bitset<23> alu::normalizaMantisa(std::bitset<24> mantisa)
     {
@@ -129,4 +135,22 @@
 
           return resultado;
     }
+    int alu::acarreoBinario(std::bitset<24> a,std::bitset<24> b){
+        int acarreoResultante = 0;
+        std::bitset<24> acarreo = 0;
+        std::bitset<24> sm1 = 0;
+          std::bitset<24>resultado = 0;
+          std::bitset<24>uno(1);
+          for (int j = 0; j < (int)a.size();j++)
+            {
+              sm1 = (((a >> j) & uno) ^ ((b >> j) & uno)) ^ acarreo;
+              resultado =resultado | sm1 << j;
+              acarreo = (((a >> j) & uno) & ((b >> j) & uno)) | (((a >> j) & uno) ^ ((b >> j) & uno)) & acarreo;
+
+          }
+
+          acarreoResultante = acarreo[0];
+          return acarreoResultante;
+    }
+
 
