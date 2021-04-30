@@ -14,6 +14,8 @@
     void alu::sumaIEE()
     {
 
+
+
         /*EJEMPLO DE USO
          * Consulta del exponente en int del numero A ->> numeroA.getExp();
          * Consulta del exponente en en binario (bitset<8>) ->> numeroA.getExpBit();
@@ -50,13 +52,22 @@
         /*Paso 13*/
     }
 
-    std::bitset<24> alu::complemento2(std::bitset<24>)
+    std::bitset<24> alu::complemento2(std::bitset<24> p)
     {
+        std::bitset<24>resultado;
         /*Rellenar metodo*/
+
+        p.flip();
+
+        resultado = sumaUno(p);
+
+        return resultado;
+
     }
 
     std::bitset<24> alu::desplazarDerecha(std::bitset<24> p, int d, int bit)
-    {   int indice = p.size()-1;
+    {
+        int indice = p.size()-1;
         p = p >>d;
         for (int i = 0; i < d;i++){
             p[indice-i] = bit;
@@ -89,9 +100,10 @@
 
     }
 
-    std::bitset<24> alu::sumaUno(std::bitset<24>)
+    std::bitset<24> alu::sumaUno(std::bitset<24> p)
     {
-        /*Rellenar metodo*/
+        std::bitset<24> uno (1);
+        return sumaBinaria(p,uno);
 
     }
 
@@ -100,3 +112,21 @@
         /*Rellenar metodo*/
 
     }
+
+    std::bitset<24> alu::sumaBinaria(std::bitset<24> a,std::bitset<24> b){
+        std::bitset<24> acarreo = 0;
+        std::bitset<24> sm1 = 0;
+          std::bitset<24>resultado = 0;
+          std::bitset<24>uno(1);
+          for (int j = 0; j < (int)a.size();j++)
+            {
+              sm1 = (((a >> j) & uno) ^ ((b >> j) & uno)) ^ acarreo;
+              resultado =resultado | sm1 << j;
+              acarreo = (((a >> j) & uno) & ((b >> j) & uno)) | (((a >> j) & uno) ^ ((b >> j) & uno)) & acarreo;
+
+          }
+
+
+          return resultado;
+    }
+
