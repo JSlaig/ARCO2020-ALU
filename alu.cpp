@@ -56,20 +56,36 @@
     }
 
     std::bitset<24> alu::desplazarDerecha(std::bitset<24> p, int d, int bit)
-    {
-        /*Rellenar metodo*/
+    {   int indice = p.size()-1;
+        p = p >>d;
+        for (int i = 0; i < d;i++){
+            p[indice-i] = bit;
+        }
+        return p;
 
     }
 
     std::bitset<24> alu::desplazarIzquierda(std::bitset<24> p, int d, int bit)
     {
-        /*Rellenar metodo*/
+
+                p = p <<d;
+                for (int i = 0; i < d;i++){
+                    p[i] = bit;
+                }
+                return p;
 
     }
 
     int alu::calculaK(std::bitset<24> p)
     {
-        /*Rellenar metodo*/
+        int k=0;
+        int contador = p.size()-1;
+        while (p[contador] == 0 && contador >-1){
+            k++;
+            contador --;
+
+        }
+        return k;
 
     }
 
