@@ -36,6 +36,10 @@ public:
 
     /*Funciones restantes*/
     void floatToIEE(float num);
+    float IEEtoFloat(unsigned int exponente, unsigned int signo, unsigned int parteFracc);
+
+    /*Temp*/
+    float getNumeroFinal();
 
 
 
@@ -52,7 +56,8 @@ private:
 
         float numero;
         unsigned int numerox;
-    }bitfield;
+
+    }numero_type;
 
     struct numIEE{
 
@@ -65,7 +70,6 @@ private:
         std::bitset<23>partFracBit;
         std::bitset<24>mantisaBit;
         std::bitset<8>expoBit;
-
 
     }numIEE;
 

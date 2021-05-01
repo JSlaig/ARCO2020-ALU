@@ -14,7 +14,7 @@
 
     numero alu::sumaIEE()
     {
-        numero resultado; // Aqui se almacenara el resultado d la suma
+      // Aqui se almacenara el resultado d la suma
 
 
         /*EJEMPLO DE USO
@@ -38,6 +38,8 @@
         std::bitset<24> mantisaSuma;
         std::bitset<24> mantisaSumaFinal;
 
+        std::cout << exponenteA_Bit << std::endl;
+
         int exponente_Suma = 0;
         int c = 0;
         int k = 0;
@@ -48,8 +50,8 @@
         int n = 24;
         bool Ope_Inter = false;
         bool Comple_P  = false;
-        int signoSuma;
-        int d;
+        int signoSuma = 0;
+        int d = 0;
         std::bitset<24> P;
 
         /*Paso 2*/      
@@ -62,6 +64,7 @@
             exponenteB = numeroA.getExpo();
             parteFracA = numeroB.getPartFrac();
             parteFracB = numeroA.getPartFrac();
+
             mantisaA = numeroB.getMantisa();
             mantisaB = numeroA.getMantisa();
         }
@@ -75,6 +78,7 @@
         }
         /*Paso 5*/
         P=mantisaB;
+         std::cout <<  "MantisaB ->"<<P.to_string() <<std::endl;
 
         /*Paso 6*/
 
@@ -85,7 +89,7 @@
             g=P[d-2];
         }
         if(d-3 < 24 && d-3 >= 0){
-            for(i=d;i<P.size()-3;i++){
+            for(i=d;i<(int)P.size()-3;i++){
                 if(P[d-i]==1){
                     st=1;
                     break;
@@ -113,7 +117,7 @@
         /*Paso 10*/
         if((signoA == signoB) && (c == 1)){
 
-            if(g == r == st == 0){
+            if((g == r) && (r == st) && (st == 0)){
                 st = 0;
             }
 
@@ -123,10 +127,12 @@
 
         }else{
 
+
         k = calculaK(P);
+        std::cout <<  "k es "<<k <<std::endl;
 
             if(k == 0){
-                if(r == st == 0){
+                if((r == st) && (st == 0)){
                     st = 0;
                 }
                 r = g;
@@ -164,9 +170,29 @@
         //Suma = (SignoSuma) * MantisaSuma * 2Exp
         QString suma;
 
-        suma.append(signoSuma).append(exponente_Suma).append(QString::fromStdString(normalizaMantisa(mantisaSuma).to_string()));
+        suma.append(signoSuma);//append(exponente_Suma); //append(QString::fromStdString(normalizaMantisa(mantisaSuma).to_string()));
 
         std::cout << suma.toStdString() <<std::endl;
+
+        std::cout << "Resultado" <<std::endl;
+        std::cout << signoSuma <<std::endl;
+
+        std::bitset<8> exp(exponente_Suma);
+        std::cout << exp.to_string() << std::endl;
+        std::cout << mantisaToPartFrac(mantisaSuma) <<std::endl;
+
+        /**/
+
+        std::cout << "Resultadooooooooooooo final" <<std::endl;
+
+        numero resultado;
+        resultado.setExpo(exponente_Suma);
+        resultado.setSing(signoSuma);
+        resultado.setPartFrac(mantisaToPartFrac(mantisaSuma).to_ulong());
+
+        resultado.setNum(resultado.IEEtoFloat(exponente_Suma,signoSuma,mantisaToPartFrac(mantisaSuma).to_ulong()));
+
+        return resultado;
 
     }
 

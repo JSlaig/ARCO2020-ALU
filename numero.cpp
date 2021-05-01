@@ -26,6 +26,14 @@
         setExpoBit(getExpo());
 
     }
+    float numero::IEEtoFloat (unsigned int exponente, unsigned int signo, unsigned int parteFracc){
+
+        numero_type.bitfield.expo = exponente;
+        numero_type.bitfield.sign = signo;
+        numero_type.bitfield.partFrac = parteFracc;
+
+        return numero_type.numero;
+    }
 
     /*Getters y setters*/
 
@@ -69,6 +77,13 @@
 
     //===========================
     std::bitset<24> numero::getMantisa(){
+
+        for(int i = 0;i < 22;i++){
+        numIEE.mantisaBit[i] = numIEE.partFracBit[i];
+        }
+
+        numIEE.mantisaBit[23] = 1;
+
         return numIEE.mantisaBit;
     }
     void numero::setMantisa(std::bitset<24> mantisa){
@@ -78,3 +93,4 @@
     void numero::setNum(float num){
        numIEE.numero = num;
     }
+
