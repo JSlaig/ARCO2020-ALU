@@ -232,22 +232,15 @@
 
     }
 
-    std::bitset<23> alu::normalizaMantisa(std::bitset<24> mantisa)
+    std::bitset<24> alu::normalizaMantisa(std::bitset<24> mantisa)
     {
-
-        std::bitset<23> mantisaNormalizada;
 
         /*Rellenar metodo*/
         while(mantisa[23]!=1){
             mantisa = desplazarIzquierda(mantisa,1,0);
         }
 
-        for(int i = 0;i < (int)mantisaNormalizada.size();i++){
-
-                    mantisaNormalizada[i] = mantisa[i];
-        }
-
-        return mantisaNormalizada;
+        return mantisa;
     }
 
     std::bitset<24> alu::sumaBinaria(std::bitset<24> a,std::bitset<24> b){
