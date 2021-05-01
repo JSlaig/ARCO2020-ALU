@@ -95,8 +95,8 @@
    <widget class="QLabel" name="labelResulDec">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>410</y>
+      <x>50</x>
+      <y>390</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -108,8 +108,8 @@
    <widget class="QLabel" name="labelResulIEEE">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>460</y>
+      <x>50</x>
+      <y>440</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -121,8 +121,8 @@
    <widget class="QLabel" name="labelResulHex">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>500</y>
+      <x>50</x>
+      <y>480</y>
       <width>121</width>
       <height>16</height>
      </rect>
@@ -198,8 +198,8 @@
    <widget class="QLineEdit" name="lineEditResDec">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>410</y>
+      <x>150</x>
+      <y>390</y>
       <width>113</width>
       <height>20</height>
      </rect>
@@ -208,9 +208,9 @@
    <widget class="QLineEdit" name="lineEditResHEX">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>500</y>
-      <width>311</width>
+      <x>200</x>
+      <y>480</y>
+      <width>341</width>
       <height>20</height>
      </rect>
     </property>
@@ -314,8 +314,8 @@
    <widget class="QLabel" name="labelNum1IEE_5">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>440</y>
+      <x>360</x>
+      <y>420</y>
       <width>151</width>
       <height>20</height>
      </rect>
@@ -327,8 +327,8 @@
    <widget class="QLabel" name="labelNum1IEE_6">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>440</y>
+      <x>150</x>
+      <y>420</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -340,8 +340,8 @@
    <widget class="QLineEdit" name="lineEditRESIEEESIG">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>460</y>
+      <x>150</x>
+      <y>440</y>
       <width>21</width>
       <height>20</height>
      </rect>
@@ -350,8 +350,8 @@
    <widget class="QLineEdit" name="lineEditRESIEEEEXP">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>460</y>
+      <x>200</x>
+      <y>440</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -360,8 +360,8 @@
    <widget class="QLineEdit" name="lineEditRESIEEEMAN">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>460</y>
+      <x>310</x>
+      <y>440</y>
       <width>231</width>
       <height>20</height>
      </rect>
@@ -370,8 +370,8 @@
    <widget class="QLabel" name="labelNum1IEE_7">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>440</y>
+      <x>210</x>
+      <y>420</y>
       <width>81</width>
       <height>20</height>
      </rect>
@@ -383,8 +383,8 @@
    <widget class="QPushButton" name="pushButtonRESET">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>540</y>
+      <x>120</x>
+      <y>520</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -396,8 +396,8 @@
    <widget class="QPushButton" name="pushButtonSALIR">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>540</y>
+      <x>470</x>
+      <y>520</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -409,8 +409,8 @@
    <widget class="QPushButton" name="pushButtonCONVERSOR">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>50</y>
+      <x>600</x>
+      <y>150</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -422,8 +422,8 @@
    <widget class="QPushButton" name="pushButtonSUMA">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>170</y>
+      <x>600</x>
+      <y>350</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -435,8 +435,8 @@
    <widget class="QPushButton" name="pushButtonPRODUCTO">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>250</y>
+      <x>600</x>
+      <y>430</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -448,8 +448,8 @@
    <widget class="QPushButton" name="pushButtonDIVISION">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>330</y>
+      <x>600</x>
+      <y>510</y>
       <width>141</width>
       <height>51</height>
      </rect>
@@ -461,8 +461,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>130</y>
+      <x>600</x>
+      <y>310</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -492,8 +492,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>360</y>
+      <x>90</x>
+      <y>340</y>
       <width>441</width>
       <height>16</height>
      </rect>
@@ -512,6 +512,29 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>40</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>CONVERSIÓN</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -519,7 +542,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

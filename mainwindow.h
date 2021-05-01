@@ -16,9 +16,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_pushButtonCONVERSOR_released();
+
+    void on_pushButtonSUMA_released();
+
 private:
     Ui::MainWindow *ui;
-    alu alu;
+    alu alU;
 
 };
 #endif // MAINWINDOW_H

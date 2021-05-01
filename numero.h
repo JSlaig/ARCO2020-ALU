@@ -6,6 +6,7 @@
 class numero
 {
 public:
+
     numero();
     numero(float num);
 
@@ -16,13 +17,13 @@ public:
     unsigned int getPartFrac();
     std::bitset<23> getPartFracBit();
     void setPartFrac(unsigned int num);
-    void setPartFracBit(std::bitset<23> numero);
+    void setPartFracBit(unsigned int pFrac);
 
     //===========================
     unsigned int getExpo();
     std::bitset<8> getExpoBit();
     void setExpo(unsigned int);
-    void setExpoBit(std::bitset<8> exp);
+    void setExpoBit(unsigned int exP);
 
     //===========================
     unsigned int getSing();

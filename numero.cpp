@@ -22,7 +22,7 @@
         setPartFrac(a.bitfield.partFrac);
         setExpo(a.bitfield.expo);
         //==
-        setPartFracBit(getExpo());
+        setPartFracBit(getPartFrac());
         setExpoBit(getExpo());
 
     }
@@ -38,7 +38,9 @@
     void numero::setPartFrac(unsigned int num){
         numIEE.partFrac = num;
     }
-    void numero::setPartFracBit(std::bitset<23> numero){
+    void numero::setPartFracBit(unsigned int pFrac){
+        std::bitset<23> numero(pFrac);
+
         numIEE.partFracBit = numero;
     }
 
@@ -52,7 +54,8 @@
     void numero::setExpo(unsigned int exp){
         numIEE.expo = exp;
     }
-    void numero::setExpoBit(std::bitset<8> exp){
+    void numero::setExpoBit(unsigned int exP){
+        std::bitset<8> exp(exP);
         numIEE.expoBit = exp;
     }
 

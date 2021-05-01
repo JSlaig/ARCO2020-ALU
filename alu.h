@@ -2,6 +2,7 @@
 #define ALU_H
 
 #include <numero.h>
+#include <QString>
 
 
 class alu
@@ -23,6 +24,9 @@ public:
     std::bitset<23> normalizaMantisa(std::bitset<24>mantisa);
     std::bitset<24> sumaBinaria(std::bitset<24> a,std::bitset<24> b);
     int  acarreoBinario(std::bitset<24> a,std::bitset<24> b);
+
+    QString returnNum1(char);
+    QString returnNum2(char);
 
 
 private:
