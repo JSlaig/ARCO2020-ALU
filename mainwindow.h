@@ -21,6 +21,10 @@ private slots:
 
     void on_pushButtonSUMA_released();
 
+    void on_pushButtonRESET_released();
+
+    void on_pushButtonSALIR_released();
+
 private:
     Ui::MainWindow *ui;
     alu alU;
