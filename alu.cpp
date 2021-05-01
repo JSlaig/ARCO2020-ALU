@@ -276,6 +276,16 @@
           return acarreoResultante;
     }
 
+    std::bitset<23> alu::mantisaToPartFrac(std::bitset<24> p){
+
+        std::bitset<23> partFrac;
+
+        for(int i = 0; i < (int)partFrac.size();i++){
+            partFrac[i] = p[i];
+        }
+        return partFrac;
+    }
+
     /******************************************************************************/
 
     QString alu::returnNum1(char s){
@@ -303,6 +313,7 @@
             break;
         }
     }
+
 std::string alu::hexadecimal(std::string cadena){
         //pasa cada 4 dígitos de binario a uno en hexadecimal
             if(cadena=="0000"){

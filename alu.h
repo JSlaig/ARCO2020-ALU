@@ -25,7 +25,9 @@ public:
     std::bitset<24> normalizaMantisa(std::bitset<24>mantisa);
     std::bitset<24> sumaBinaria(std::bitset<24> a,std::bitset<24> b);
     int  acarreoBinario(std::bitset<24> a,std::bitset<24> b);
-    
+
+    std::bitset<23> mantisaToPartFrac(std::bitset<24> p);
+
     // metodos para convertir de binario a hexadecimal
     std::string cadenaConcatenadaBinaria(const std::string &cad1,const std::string &cad2,const std::string &cad3 );
     std::string hexadecimal(std::string cadena);
