@@ -101,8 +101,8 @@
         }
 
         /*Paso 8*/
-        P = sumaBinaria(mantisaA,P);
         c = acarreoBinario(mantisaA,P);
+        P = sumaBinaria(mantisaA,P);     
 
         /*Paso 9*/
         if(((signoA != signoB) && (P[n-1]) == 1) && (c == 0)){
@@ -142,8 +142,8 @@
         /*Paso 11*/
         if((r == 1 && st == 1) || (r == 1 && st == 0 && P[0] == 1)){
 
-            P = sumaUno(P);
             c = acarreoUno(P);
+            P = sumaUno(P);         
 
             if(c == 1){
                 P = desplazarDerecha(P,1,c);
