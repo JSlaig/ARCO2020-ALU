@@ -303,5 +303,65 @@
             break;
         }
     }
+std::string alu::hexadecimal(std::string cadena){
+        //pasa cada 4 dígitos de binario a uno en hexadecimal
+            if(cadena=="0000"){
+                return "0";
+            }else if(cadena=="0001"){
+                return "1";
+            }else if(cadena=="0010"){
+                return "2";
+            }else if(cadena=="0011"){
+                return "3";
+            }else if(cadena=="0100"){
+                return "4";
+            }else if(cadena=="0101"){
+                return "5";
+            }else if(cadena=="0110"){
+                return "6";
+            }else if(cadena=="0111"){
+                return "7";
+            }else if(cadena=="1000"){
+                return "8";
+            }else if(cadena=="1001"){
+                return "9";
+            }else if(cadena=="1010"){
+                return "A";
+            }else if(cadena=="1011"){
+                return "B";
+            }else if(cadena=="1100"){
+                return "C";
+            }else if(cadena=="1101"){
+                return "D";
+            }else if(cadena=="1110"){
+                return "E";
+            }else if(cadena=="1111"){
+                return "F";
+            }
+               return 0;
+        }
+
+    std::string alu::conversorBinarioHexadecimal(std::string binario){
+        //coges el numero en binario
+            std::string b = binario+"";
+            std::string sol = "";//solucion
+            //separa el numero de 4en4 dígitos
+            int numeroSeparaciones = binario.length()/4;
+            if(binario.length()%4>0){//si el numero no es exacto añade una separacion
+                numeroSeparaciones++;
+            }
+            for (int var = binario.length(); var < numeroSeparaciones*4; ++var) {//si el numero no es esacto añade 0 a la derecha
+                b="0"+b;
+            }
+            for (int var = 0; var < numeroSeparaciones; ++var) {//coge los digitos binarios de 4 en 4 y llamando al metodo anterior, los pasa a hexadecimal
+                sol+=hexadecimal(b.substr((var*4),4));
+            }
+            return sol;
+        }
+
+    std::string alu::cadenaConcatenadaBinaria(const std::string &cad1,const std::string &cad2,const std::string &cad3 ){
+        return cad1 + cad2 + cad3;
+    }
+
 
 
