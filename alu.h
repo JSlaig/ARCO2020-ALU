@@ -15,6 +15,7 @@ public:
     /*funciones*/
 
     numero sumaIEE();
+    numero productoIEE();
     std::bitset<24> complemento2(std::bitset<24>);
     std::bitset<24> desplazarDerecha(std::bitset<24> p,int d, int bit);
     std::bitset<24> desplazarIzquierda(std::bitset<24> p,int d, int bit);
