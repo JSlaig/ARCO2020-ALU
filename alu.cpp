@@ -177,18 +177,22 @@
         std::cout << "Resultado" <<std::endl;
         std::cout << signoSuma <<std::endl;
 
-        std::bitset<8> exp(exponente_Suma);
-        std::cout << exp.to_string() << std::endl;
+
+
         std::cout << mantisaToPartFrac(mantisaSuma) <<std::endl;
 
-        /**/
+        /********************************************/
 
         std::cout << "Resultadooooooooooooo final" <<std::endl;
 
         numero resultado;
+
         resultado.setExpo(exponente_Suma);
+        resultado.setExpoBit(exponente_Suma);
+
         resultado.setSing(signoSuma);
         resultado.setPartFrac(mantisaToPartFrac(mantisaSuma).to_ulong());
+        resultado.setPartFracBit(mantisaToPartFrac(mantisaSuma).to_ulong());
 
         resultado.setNum(resultado.IEEtoFloat(exponente_Suma,signoSuma,mantisaToPartFrac(mantisaSuma).to_ulong()));
 

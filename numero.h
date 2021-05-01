@@ -13,6 +13,7 @@ public:
     /*Getters y setters*/
 
     void setNum(float num);
+    float getNum();
     //===========================
     unsigned int getPartFrac();
     std::bitset<23> getPartFracBit();

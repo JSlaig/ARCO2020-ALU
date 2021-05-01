@@ -94,3 +94,7 @@
        numIEE.numero = num;
     }
 
+    float numero::getNum(){
+        return numIEE.numero;
+    }
+

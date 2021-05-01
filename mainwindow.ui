@@ -506,7 +506,7 @@
      </font>
     </property>
     <property name="text">
-     <string>RESULTADO DE LA OPERACION SELECCIONADA</string>
+     <string>RESULTADO DE LA OPERACIÓN SELECCIONADA</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

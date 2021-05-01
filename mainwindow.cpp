@@ -8,6 +8,7 @@
 #include <sstream>
 #include<string>
 #include <bitset>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -28,21 +29,22 @@ void MainWindow::on_pushButtonCONVERSOR_released()
     //alU = alu(ui->lineEditNum1->text(),ui->lineEditNum2->text());
        float numA = ui->lineEditNum1->text().toFloat();
        float numB = ui->lineEditNum2->text().toFloat();
+
        std::string prefijo = "0x";
        std::string prefijo2;
        prefijo2 = prefijo;
        alU = alu(numA,numB);
 
+       /*Conversion FloatToIEE*/
        ui->lineEditNum1IEEESIG->setText(alU.returnNum1('s'));
        ui->lineEditNum1IEEEEXP->setText(alU.returnNum1('e'));
        ui->lineEditNum1IEEEMAN->setText(alU.returnNum1('f'));
-
-
 
        ui->lineEditNum2IEEESIG->setText(alU.returnNum2('s'));
        ui->lineEditNum2IEEEEXP->setText(alU.returnNum2('e'));
        ui->lineEditNum2IEEEMAN->setText(alU.returnNum2('f'));
 
+       /*Conversion a Hexadecimal*/
        std::string signo1= ui->lineEditNum1IEEESIG->text().toUtf8().constData();
        std::string exponente1= ui->lineEditNum1IEEEEXP->text().toUtf8().constData();
        std::string mantisa1= ui->lineEditNum1IEEEMAN->text().toUtf8().constData();
@@ -68,12 +70,20 @@ void MainWindow::on_pushButtonCONVERSOR_released()
 
 void MainWindow::on_pushButtonSUMA_released()
 {
-    float numA = ui->lineEditNum1->text().toFloat();
+        MainWindow::on_pushButtonCONVERSOR_released();
+
+        float numA = ui->lineEditNum1->text().toFloat();
         float numB = ui->lineEditNum2->text().toFloat();
 
         alU = alu(numA,numB);
 
-        alU.sumaIEE();
+        numero numeroSuma;
+        numeroSuma = alU.sumaIEE();
+
+        ui->lineEditResDec->setText(QString::number(numeroSuma.getNum()));
+        ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroSuma.getExpoBit().to_string()));
+        ui->lineEditRESIEEESIG->setText(QString::number(numeroSuma.getSing()));
+        ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroSuma.getPartFracBit().to_string()));
 }
 
 void MainWindow::on_pushButtonRESET_released()
