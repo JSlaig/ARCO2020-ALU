@@ -215,12 +215,16 @@
 
     std::bitset<24> alu::desplazarDerecha(std::bitset<24> p, int d, int bit)
     {
-        int indice = p.size()-1;
-        p = p >>d;
-        for (int i = 0; i < d;i++){
-            p[indice-i] = bit;
-        }
-        return p;
+        std::cout << "p antes -> " << p.to_string() << std::endl;
+
+        for(int i = 0; i < d; i++){
+                for(int i = 0; i < (int) (p.size() - 1); i++)
+                    p.set(i, p[i+1]);
+                p.set((int) (p.size() - 1) , bit);
+            }
+        std::cout << "p despues -> " << p.to_string() << std::endl;
+
+            return p;
 
     }
 
