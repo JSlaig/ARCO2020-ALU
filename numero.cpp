@@ -78,11 +78,12 @@
     //===========================
     std::bitset<24> numero::getMantisa(){
 
-        for(int i = 0;i < 22;i++){
-        numIEE.mantisaBit[i] = numIEE.partFracBit[i];
+        for(int i = 0;i < 23;i++){
+            numIEE.mantisaBit.set(i,numIEE.partFracBit[i]);
+        //numIEE.mantisaBit[i] = numIEE.partFracBit[i];
         }
 
-        numIEE.mantisaBit[23] = 1;
+        numIEE.mantisaBit.set(23,1);
 
         return numIEE.mantisaBit;
     }

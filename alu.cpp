@@ -76,9 +76,11 @@
         if(signoA!=signoB){
             mantisaB = complemento2(mantisaB);
         }
+
         /*Paso 5*/
         P=mantisaB;
-         std::cout <<  "MantisaB ->"<<P.to_string() <<std::endl;
+         std::cout <<  "MantisaA -> "<<mantisaA.to_string() <<std::endl;
+         std::cout <<  "MantisaB -> "<<mantisaB.to_string() <<std::endl;
 
         /*Paso 6*/
 
@@ -96,12 +98,16 @@
                 }
             }
         }
+        std::cout << "paso 7, p antes de desplazarse -> " << P.to_string() << std::endl;
 
         /*Paso 7*/
         if(signoA!=signoB){
             P = desplazarDerecha(P,d,1);
+
         }else{
             P = desplazarDerecha(P,d,0);
+
+
         }
 
         /*Paso 8 [Bien]*/
