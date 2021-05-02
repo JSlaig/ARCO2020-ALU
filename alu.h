@@ -32,6 +32,7 @@ public:
     std::string cadenaConcatenadaBinaria(const std::string &cad1,const std::string &cad2,const std::string &cad3 );
     std::string hexadecimal(std::string cadena);
     std::string conversorBinarioHexadecimal(std::string binario);
+    bool compruebaNumOpuetos();
 
     QString returnNum1(char);
     QString returnNum2(char);

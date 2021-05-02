@@ -6,7 +6,7 @@
     numero::numero(float num)
     {
 
-    floatToIEE(num);
+        floatToIEE(num);
 
     }
 

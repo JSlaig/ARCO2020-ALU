@@ -6,9 +6,12 @@
 
     alu::alu(float numA, float numB)
     {
+
+
         /*Creacion de dos numeros Objeto*/
-    numeroA = numero(numA);
-    numeroB = numero(numB);
+        numeroA = numero(numA);
+        numeroB = numero(numB);
+
 
     }
 
@@ -23,7 +26,12 @@
          *
          * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
          */
+        if(compruebaNumOpuetos()){
 
+            numero numZero = numero(0);
+
+            return numZero;
+        }
         /*Rellenar*/
         int signoA = numeroA.getSing();
         int signoB = numeroB.getSing();
@@ -420,5 +428,14 @@ std::string alu::hexadecimal(std::string cadena){
         return cad1 + cad2 + cad3;
     }
 
+    bool alu::compruebaNumOpuetos(){
+
+        if((numeroA.getSing() != numeroB.getSing()) && (numeroA.getExpoBit() == numeroB.getExpoBit()) && numeroA.getPartFracBit() == numeroB.getPartFracBit()){
+
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
