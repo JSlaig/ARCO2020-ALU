@@ -250,15 +250,12 @@
 
     int alu::calculaK(std::bitset<24> p)
     {
-        int k=0;
-        int contador = p.size()-1;
-        while (p[contador] == 0 && contador >-1){
-            k++;
-            contador --;
-
-        }
-        return k;
-
+        int i = (int)p.size()-1,k = 0;
+                while (!p[i]) {
+                    k++;
+                    i--;
+                }
+    return k;
     }
 
     std::bitset<24> alu::sumaUno(std::bitset<24> p)
