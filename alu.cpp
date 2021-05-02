@@ -104,10 +104,14 @@
             P = desplazarDerecha(P,d,0);
         }
 
-        /*Paso 8*/
+        /*Paso 8 [Bien]*/
+        std::cout << "paso 8, mantisaA-> " << mantisaA.to_string() << std::endl;
+        std::cout << "paso 8, antes p-> " << P.to_string() << std::endl;
+
         c = acarreoBinario(mantisaA,P);
         P = sumaBinaria(mantisaA,P);     
 
+        std::cout << "paso 8, despues p-> " << P.to_string() << std::endl;
         /*Paso 9*/
         if(((signoA != signoB) && (P[n-1]) == 1) && (c == 0)){
             P = complemento2(P);
@@ -141,9 +145,11 @@
                 st = 0;
             }
 
+        std::cout << "paso 10, antes p-> " << P.to_string() << std::endl;
         P = desplazarIzquierda(P,k,g);
         exponente_Suma = exponente_Suma - k;
         }
+        std::cout << "paso 10, despues p-> " << P.to_string() << std::endl;
 
         /*Paso 11*/
         if((r == 1 && st == 1) || (r == 1 && st == 0 && P[0] == 1)){
@@ -174,7 +180,7 @@
 
         std::cout << suma.toStdString() <<std::endl;
 
-        std::cout << "Resultado" <<std::endl;
+        std::cout << "Exponente -> " << exponente_Suma <<std::endl;
         std::cout << signoSuma <<std::endl;
 
 
@@ -215,14 +221,12 @@
 
     std::bitset<24> alu::desplazarDerecha(std::bitset<24> p, int d, int bit)
     {
-        std::cout << "p antes -> " << p.to_string() << std::endl;
 
         for(int i = 0; i < d; i++){
                 for(int i = 0; i < (int) (p.size() - 1); i++)
                     p.set(i, p[i+1]);
                 p.set((int) (p.size() - 1) , bit);
             }
-        std::cout << "p despues -> " << p.to_string() << std::endl;
 
             return p;
 
@@ -231,12 +235,17 @@
     std::bitset<24> alu::desplazarIzquierda(std::bitset<24> p, int d, int bit)
     {
 
-                p = p <<d;
-                for (int i = 0; i < d;i++){
-                    p[i] = bit;
-                }
-                return p;
+        //std::cout << "p antes izquierda-> " << p.to_string() << std::endl;
 
+        for(int i = 0; i < d; i++){
+                for(int i = (int) (p.size() - 1); i >= 0; i--){
+                    p.set(i, p[i-1]);
+                }
+                p.set(0 , bit);
+            }
+        //std::cout << "p despues izquierda-> " << p.to_string() << std::endl;
+
+            return p;
     }
 
     int alu::calculaK(std::bitset<24> p)
