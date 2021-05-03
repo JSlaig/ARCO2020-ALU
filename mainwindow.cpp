@@ -30,6 +30,9 @@ void MainWindow::on_pushButtonCONVERSOR_released()
        float numA = ui->lineEditNum1->text().toFloat();
        float numB = ui->lineEditNum2->text().toFloat();
 
+       std::string prefijo = "0x";
+       std::string prefijo2;
+       prefijo2 = prefijo;
        alU = alu(numA,numB);
 
        /*Conversion FloatToIEE*/
@@ -41,8 +44,8 @@ void MainWindow::on_pushButtonCONVERSOR_released()
        ui->lineEditNum2IEEEEXP->setText(alU.returnNum2('e'));
        ui->lineEditNum2IEEEMAN->setText(alU.returnNum2('f'));
 
-        setHexaConversion();
-
+       setHexaConversion();
+       setHexaResultado();
 
 }
 
@@ -93,6 +96,33 @@ void MainWindow::on_pushButtonSALIR_released()
      ui->pushButtonSALIR->connect(ui->pushButtonSALIR, &QPushButton::clicked, qApp, &QApplication::quit);
 }
 
+void MainWindow::on_pushButtonPRODUCTO_released()
+{
+    float numA = ui->lineEditNum1->text().toFloat();
+    float numB = ui->lineEditNum2->text().toFloat();
+    alU = alu(numA,numB);
+     MainWindow::on_pushButtonCONVERSOR_released();
+    numero numeroProducto;
+    numeroProducto = alU.productoIEE();
+
+    if (!numeroProducto.getNan()){
+
+
+    ui->lineEditResDec->setText(QString::number(numeroProducto.getNum()));
+    std::cout<<numeroProducto.getNum()<<std::endl;
+    ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroProducto.getExpoBit().to_string()));
+    ui->lineEditRESIEEESIG->setText(QString::number(numeroProducto.getSing()));
+    ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroProducto.getPartFracBit().to_string()));
+} else  {
+        ui->lineEditResDec->setText("NaN");
+        ui->lineEditRESIEEEEXP->setText("11111111");
+        ui->lineEditRESIEEESIG->setText("1");
+        ui->lineEditRESIEEEMAN->setText("11111111111111111111111");
+    }
+    setHexaConversion();
+    setHexaResultado();
+
+}
 void MainWindow::setHexaConversion(){
 
 
@@ -143,3 +173,4 @@ void MainWindow::setHexaResultado(){
     ui->lineEditResHEX->setText(res1);
 
 }
+

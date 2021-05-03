@@ -9,7 +9,11 @@
         floatToIEE(num);
 
     }
+    numero::numero(std::string nan){
+        numIEE.nan = true;
 
+        floatToIEE(0);
+    }
 
     /*Funciones restantes*/
     void numero::floatToIEE(float num){
@@ -98,4 +102,9 @@
     float numero::getNum(){
         return numIEE.numero;
     }
+
+    bool numero::getNan(){
+        return numIEE.nan;
+    }
+
 

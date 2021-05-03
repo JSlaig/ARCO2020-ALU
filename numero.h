@@ -9,6 +9,8 @@ public:
 
     numero();
     numero(float num);
+    numero(std::string);
+
 
     /*Getters y setters*/
 
@@ -38,7 +40,7 @@ public:
     /*Funciones restantes*/
     void floatToIEE(float num);
     float IEEtoFloat(unsigned int exponente, unsigned int signo, unsigned int parteFracc);
-
+     bool getNan();
     /*Temp*/
     float getNumeroFinal();
 
@@ -65,7 +67,7 @@ private:
         unsigned int partFrac : 23;
         unsigned int expo : 8;
         unsigned int sign : 1;
-
+        bool nan = false;
         float numero;
 
         std::bitset<23>partFracBit;

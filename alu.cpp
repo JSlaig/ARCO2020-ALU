@@ -121,7 +121,7 @@
         /*Paso 8 [Bien]*/
         std::cout << "paso 8, mantisaA-> " << mantisaA.to_string() << std::endl;
         std::cout << "paso 8, antes p-> " << P.to_string() << std::endl;
-
+        //bool c;
         c = acarreoBinario(mantisaA,P);
         P = sumaBinaria(mantisaA,P);     
 
@@ -219,6 +219,129 @@
         return resultado;
 
     }
+    // multiplicacion
+    numero alu::productoIEE(){
+
+
+        if((numeroA.getExpoBit().to_string() == "00000000"  && numeroA.getPartFracBit().to_string() == "00000000000000000000000" )||
+                    (numeroB.getExpoBit().to_string() == "00000000" && numeroB.getPartFracBit().to_string() == "00000000000000000000000")){
+
+                if ((numeroA.getExpoBit().to_string() == "11111111" && numeroA.getPartFracBit().to_string() == "00000000000000000000000" ) ||
+                    (numeroB.getExpoBit().to_string() == "11111111" && numeroB.getPartFracBit().to_string() == "00000000000000000000000")){
+
+                    numero nan = numero("NaN");
+                    return nan;
+                    }
+                numero zero = numero(0);
+                return zero;
+                }
+
+
+
+
+        //Ahora no son los dos cerapios
+
+       // modificar
+
+
+        //MANTISSA_SIZE = 23
+        // std::bitset<23>partFracBit; es lo q  hay q obtener en getMantissa
+        std::bitset<24> A;
+        for(int i = 0; i<23; i++){
+            A[i]=numeroA.getPartFracBit()[i];
+        }
+        A[A.size()-1] = 1;
+
+        std::bitset<24> B;
+        for(int i = 0; i<23; i++){
+            B[i]=numeroB.getPartFracBit()[i];
+        }
+        B[B.size()-1] = 1;
+
+        int expA = numeroA.getExpoBit().to_ulong();
+        int expB = numeroB.getExpoBit().to_ulong();
+        int signA = numeroA.getSing();
+        int signB = numeroB.getSing();
+
+        const int mantSize = A.size();
+        std::bitset<mantSize> P;
+
+    // 1.
+        int signSol = 0;
+
+        if(signA != signB){
+             signSol = 1;
+        }
+        std::cout<<"signo de la solucion: "<<signSol<<std::endl;
+    // 2.
+        int expSol = expA-127 + expB-127;
+    // 3.
+        //3.1
+        bool carry;
+        std::bitset<48> prod;
+        prod = bitsetMultiply(A, B,carry);
+        //3.2
+        if(!prod[47]){
+            prod<<=1;
+        } else {
+            expSol++;
+        }
+        //3.3
+        bool round = prod[23];
+        //3.4
+        int x = 23;
+        bool sticky;
+        while (x > 0){
+            x--;
+            sticky = sticky || prod[x];
+        }
+        //3.5
+        if((round && sticky) || (round && !sticky && prod[24])){
+            std::bitset<prod.size()> one;
+            one.set(0, 1);
+            bitsetAdd(prod, one);
+        }
+            //Desbordamientos a infinito (overflow)
+            if(expSol>128){
+                expSol=128;
+                prod.reset();
+            //Desbordamiento a 0 (underflow)
+            } else if(expSol<-126){
+                int despl = 1-expSol;
+                if(despl< 23){
+                    prod >>= despl;
+                    expSol = -126;
+                }
+            }
+        std::bitset<24> manSol;
+        for(int i = 0; i<24; i++){
+            manSol[i] = prod[i+24];
+        }
+        std::cout<<"signo de solucion : "<<signSol<<std::endl;
+        std::cout<<"exponente de solucion : "<<expSol<<std::endl;
+        std::cout<<"mantisa de solucion : "<<manSol<<std::endl;
+        std::cout<<"Longitud de solucion : "<<manSol.size()<<std::endl;
+
+        std::bitset<23> partefraccionaria;
+        for (int i = 0; i <23; i++){
+            partefraccionaria[i] = manSol[i];
+        }
+         numero resultado;
+        float numero1 = numeroA.getNum();
+        float numero2 = numeroB.getNum();
+        resultado.setSing(signSol);
+        resultado.setPartFracBit(partefraccionaria.to_ulong());
+        resultado.setExpoBit(expSol+127);
+         resultado.setNum(resultado.IEEtoFloat(expSol+127,signSol,partefraccionaria.to_ulong()));
+        float resultadoprov = resultado.IEEtoFloat(expSol+127,signSol,partefraccionaria.to_ulong());
+        std::cout<<"numero 1: "<<numero1<<std::endl;
+        std::cout<<"numero 2: "<<numero2<<std::endl;
+        std::cout<<"resultado: "<<resultadoprov<<std::endl;
+        return resultado;
+    }
+
+
+
 
     std::bitset<24> alu::complemento2(std::bitset<24> p)
     {
@@ -438,4 +561,50 @@ std::string alu::hexadecimal(std::string cadena){
         }
     }
 
+    //Acarreo Suma
+    bool alu::fullAdder(bool b1, bool b2, bool& carry){
+        bool sum = (b1 ^ b2) ^ carry;
+        carry = (b1 && b2) || (b1 && carry) || (b2 && carry);
+        return sum;
+    }
+    //metodos nuevos
+         //Multiplicacion
+         std::bitset<48> alu::bitsetMultiply(std::bitset<24>& x, const std::bitset<24>& y, bool &carry){
 
+             std::bitset<24> P;
+             std::bitset<48> result;
+             for ( int i = 0; i<24;i++){
+                 if(x[0]) carry = bitsetAdd(P, y);
+                 x >>= 1;
+                 x[23] = P[0];
+                 P >>= 1;
+                 P[23] = carry;
+                 carry >>= 1;
+
+             }
+
+             for(int i = 0; i<24; i++){
+                 result[i]=x[i];
+                 result[i+24]= P[i];
+             }
+             return result;      //sobran los 2 primeros
+         }
+
+    // diversas sumas
+
+    bool alu::bitsetAdd(std::bitset<48>& x, const std::bitset<48>& y){
+        bool carry = false;
+        for (int i = 0; i < 24; i++){
+            x[i] = fullAdder(x[i], y[i], carry);
+        }
+        return carry;
+    }
+
+
+    bool alu::bitsetAdd(std::bitset<24>& x, const std::bitset<24>& y){
+        bool carry = false;
+        for (int i = 0; i < 24; i++){
+            x[i] = fullAdder(x[i], y[i], carry);
+        }
+        return carry;
+    }
