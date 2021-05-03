@@ -25,6 +25,9 @@ private slots:
 
     void on_pushButtonSALIR_released();
 
+    void setHexaConversion();
+    void setHexaResultado();
+
 private:
     Ui::MainWindow *ui;
     alu alU;

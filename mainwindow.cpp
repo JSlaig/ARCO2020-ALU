@@ -30,9 +30,6 @@ void MainWindow::on_pushButtonCONVERSOR_released()
        float numA = ui->lineEditNum1->text().toFloat();
        float numB = ui->lineEditNum2->text().toFloat();
 
-       std::string prefijo = "0x";
-       std::string prefijo2;
-       prefijo2 = prefijo;
        alU = alu(numA,numB);
 
        /*Conversion FloatToIEE*/
@@ -44,24 +41,7 @@ void MainWindow::on_pushButtonCONVERSOR_released()
        ui->lineEditNum2IEEEEXP->setText(alU.returnNum2('e'));
        ui->lineEditNum2IEEEMAN->setText(alU.returnNum2('f'));
 
-       /*Conversion a Hexadecimal*/
-       std::string signo1= ui->lineEditNum1IEEESIG->text().toUtf8().constData();
-       std::string exponente1= ui->lineEditNum1IEEEEXP->text().toUtf8().constData();
-       std::string mantisa1= ui->lineEditNum1IEEEMAN->text().toUtf8().constData();
-       std::string resultado1 = alU.cadenaConcatenadaBinaria(signo1,exponente1,mantisa1);
-       std:: string cad_Hexadecimal = alU.conversorBinarioHexadecimal(resultado1);
-       std::string resultadoHexadecimal = prefijo.append(cad_Hexadecimal);
-       QString res1 = QString::fromUtf8(resultadoHexadecimal.c_str());
-       ui->lineEditNum1HEX->setText(res1);
-
-       std::string signo2= ui->lineEditNum2IEEESIG->text().toUtf8().constData();
-       std::string exponente2= ui->lineEditNum2IEEEEXP->text().toUtf8().constData();
-       std::string mantisa2= ui->lineEditNum2IEEEMAN->text().toUtf8().constData();
-       std::string resultado2 = alU.cadenaConcatenadaBinaria(signo2,exponente2,mantisa2);
-       std:: string cad_Hexadecimal2 = alU.conversorBinarioHexadecimal(resultado2);
-       std::string resultadoHexadecimal2 = prefijo2.append(cad_Hexadecimal2);
-       QString res2 = QString::fromUtf8(resultadoHexadecimal2.c_str());
-       ui->lineEditNum2HEX->setText(res2);
+        setHexaConversion();
 
 
 }
@@ -84,6 +64,9 @@ void MainWindow::on_pushButtonSUMA_released()
         ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroSuma.getExpoBit().to_string()));
         ui->lineEditRESIEEESIG->setText(QString::number(numeroSuma.getSing()));
         ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroSuma.getPartFracBit().to_string()));
+
+        setHexaConversion();
+        setHexaResultado();
 }
 
 void MainWindow::on_pushButtonRESET_released()
@@ -108,4 +91,55 @@ void MainWindow::on_pushButtonRESET_released()
 void MainWindow::on_pushButtonSALIR_released()
 {
      ui->pushButtonSALIR->connect(ui->pushButtonSALIR, &QPushButton::clicked, qApp, &QApplication::quit);
+}
+
+void MainWindow::setHexaConversion(){
+
+
+    /*Datos*/
+
+        std::string prefijo = "0x";
+        std::string prefijo2;
+        prefijo2 = prefijo;
+
+    /*Conversion a Hexadecimal*/
+
+          std::string signo1= ui->lineEditNum1IEEESIG->text().toUtf8().constData();
+          std::string exponente1= ui->lineEditNum1IEEEEXP->text().toUtf8().constData();
+          std::string mantisa1= ui->lineEditNum1IEEEMAN->text().toUtf8().constData();
+          std::string resultado1 = alU.cadenaConcatenadaBinaria(signo1,exponente1,mantisa1);
+          std:: string cad_Hexadecimal = alU.conversorBinarioHexadecimal(resultado1);
+          std::string resultadoHexadecimal = prefijo.append(cad_Hexadecimal);
+          QString res1 = QString::fromUtf8(resultadoHexadecimal.c_str());
+          ui->lineEditNum1HEX->setText(res1);
+
+          std::string signo2= ui->lineEditNum2IEEESIG->text().toUtf8().constData();
+          std::string exponente2= ui->lineEditNum2IEEEEXP->text().toUtf8().constData();
+          std::string mantisa2= ui->lineEditNum2IEEEMAN->text().toUtf8().constData();
+          std::string resultado2 = alU.cadenaConcatenadaBinaria(signo2,exponente2,mantisa2);
+          std:: string cad_Hexadecimal2 = alU.conversorBinarioHexadecimal(resultado2);
+          std::string resultadoHexadecimal2 = prefijo2.append(cad_Hexadecimal2);
+          QString res2 = QString::fromUtf8(resultadoHexadecimal2.c_str());
+          ui->lineEditNum2HEX->setText(res2);
+
+
+}
+void MainWindow::setHexaResultado(){
+
+    /*Datos*/
+    std::string prefijo = "0x";
+    std::string prefijo2;
+    prefijo2 = prefijo;
+
+    /*Conversion a Hexadecimal*/
+    std::string signo1= ui->lineEditRESIEEESIG->text().toUtf8().constData();
+    std::string exponente1= ui->lineEditRESIEEEEXP->text().toUtf8().constData();
+    std::string mantisa1= ui->lineEditRESIEEEMAN->text().toUtf8().constData();
+    std::string resultado1 = alU.cadenaConcatenadaBinaria(signo1,exponente1,mantisa1);
+    std:: string cad_Hexadecimal = alU.conversorBinarioHexadecimal(resultado1);
+    std::string resultadoHexadecimal = prefijo.append(cad_Hexadecimal);
+    QString res1 = QString::fromUtf8(resultadoHexadecimal.c_str());
+
+    ui->lineEditResHEX->setText(res1);
+
 }
