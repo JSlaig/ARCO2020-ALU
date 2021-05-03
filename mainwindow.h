@@ -27,6 +27,8 @@ private slots:
 
     void on_pushButtonPRODUCTO_released();
 
+    void resetResultado();
+
     void setHexaResultado();
 
     void setHexaConversion();

@@ -49,10 +49,18 @@ void MainWindow::on_pushButtonCONVERSOR_released()
 
 }
 
-
+void MainWindow::resetResultado()
+{
+        ui->lineEditRESIEEESIG->setText("");
+        ui->lineEditRESIEEEEXP->setText("");
+        ui->lineEditRESIEEEMAN->setText("");
+        ui->lineEditResHEX->setText("");
+        ui->lineEditResDec->setText("");
+}
 
 void MainWindow::on_pushButtonSUMA_released()
 {
+        resetResultado();
         MainWindow::on_pushButtonCONVERSOR_released();
 
         float numA = ui->lineEditNum1->text().toFloat();
@@ -74,6 +82,9 @@ void MainWindow::on_pushButtonSUMA_released()
 
 void MainWindow::on_pushButtonRESET_released()
 {
+
+
+
     ui->lineEditNum1->setText("");
     ui->lineEditNum2->setText("");
     ui->lineEditNum1IEEESIG->setText("");
@@ -98,6 +109,8 @@ void MainWindow::on_pushButtonSALIR_released()
 
 void MainWindow::on_pushButtonPRODUCTO_released()
 {
+
+    resetResultado();
     float numA = ui->lineEditNum1->text().toFloat();
     float numB = ui->lineEditNum2->text().toFloat();
     alU = alu(numA,numB);
