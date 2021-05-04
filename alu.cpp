@@ -17,15 +17,9 @@
 
     numero alu::sumaIEE()
     {
-      // Aqui se almacenara el resultado d la suma
 
+        // ===================================-SUMA-===================================
 
-        /*EJEMPLO DE USO
-         * Consulta del exponente en int del numero A ->> numeroA.getExp();
-         * Consulta del exponente en en binario (bitset<8>) ->> numeroA.getExpBit();
-         *
-         * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
-         */
         if(compruebaNumOpuetos()){
 
             numero numZero = numero(0);
@@ -224,7 +218,8 @@
         return resultado;
 
     }
-    // multiplicacion
+
+    // ===================================-MULTIPLICACION-===================================
     numero alu::productoIEE(){
 
 
