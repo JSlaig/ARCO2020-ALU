@@ -76,7 +76,7 @@ void MainWindow::on_pushButtonSUMA_released()
         ui->lineEditRESIEEESIG->setText(QString::number(numeroSuma.getSing()));
         ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroSuma.getPartFracBit().to_string()));
 
-        setHexaConversion();
+       setHexaConversion();
         setHexaResultado();
 }
 
@@ -126,7 +126,11 @@ void MainWindow::on_pushButtonPRODUCTO_released()
 
     }*/
     if(numeroProducto.getInfinito() == true){
-         ui->lineEditResDec->setText("infinito");
+        if(numeroProducto.getSing()==0){
+            ui->lineEditResDec->setText("infinito");
+        }else{
+            ui->lineEditResDec->setText("-infinito");
+        }
          ui->lineEditRESIEEEEXP->setText("-----");
          ui->lineEditRESIEEESIG->setText("-------------");
          ui->lineEditRESIEEEMAN->setText("--------------");

@@ -314,7 +314,7 @@
                     prod.reset();
                     numero infinito;
                     infinito.setInfinito(true);
-
+                    infinito.setSing(signSol);
                     return infinito;
         }
 
