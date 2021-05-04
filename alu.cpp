@@ -340,8 +340,11 @@
         return resultado;
     }
 
+    // ===================================-DIVISION-===================================
 
+    numero alu::division(){
 
+    }
 
     std::bitset<24> alu::complemento2(std::bitset<24> p)
     {
