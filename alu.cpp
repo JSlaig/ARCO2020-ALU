@@ -31,6 +31,11 @@
             numero numZero = numero(0);
 
             return numZero;
+        }else if(compruebaCero()){
+
+                 numero numZero = numero(0);
+
+                 return numZero;
         }
         /*Rellenar*/
         int signoA = numeroA.getSing();
@@ -559,6 +564,14 @@ std::string alu::hexadecimal(std::string cadena){
         }else{
             return false;
         }
+    }
+
+    bool alu::compruebaCero(){
+
+        if(numeroA.getNum() == 0 && numeroB.getNum() == 0){
+                 return true;
+        }
+                 return false;
     }
 
     //Acarreo Suma

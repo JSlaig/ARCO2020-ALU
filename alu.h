@@ -33,6 +33,7 @@ public:
     std::string hexadecimal(std::string cadena);
     std::string conversorBinarioHexadecimal(std::string binario);
     bool compruebaNumOpuetos();
+    bool compruebaCero();
      std::bitset<48> bitsetMultiply(std::bitset<24>& x, const std::bitset<24>& y, bool &carry);
     bool fullAdder(bool b1, bool b2, bool& carry);
     bool bitsetAdd(std::bitset<48>& x, const std::bitset<48>& y);
