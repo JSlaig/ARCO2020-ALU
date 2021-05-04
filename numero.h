@@ -35,12 +35,19 @@ public:
     //===========================
     std::bitset<24> getMantisa();
     void setMantisa(std::bitset<24> mantisa);
-
+    void setInfinito(std::string otro);
+    //std::string getInfinito();
 
     /*Funciones restantes*/
     void floatToIEE(float num);
     float IEEtoFloat(unsigned int exponente, unsigned int signo, unsigned int parteFracc);
      bool getNan();
+     bool getInfinito();
+     void setInfinito(bool otro);
+
+     bool getIndeterminado();
+     void setIndeterminado(bool otro);
+
     /*Temp*/
     float getNumeroFinal();
 
@@ -68,7 +75,10 @@ private:
         unsigned int expo : 8;
         unsigned int sign : 1;
         bool nan = false;
+        bool indeterminado = false;
+        bool infinito = false;
         float numero;
+      //std::string infinito;
 
         std::bitset<23>partFracBit;
         std::bitset<24>mantisaBit;

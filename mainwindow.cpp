@@ -117,23 +117,41 @@ void MainWindow::on_pushButtonPRODUCTO_released()
      MainWindow::on_pushButtonCONVERSOR_released();
     numero numeroProducto;
     numeroProducto = alU.productoIEE();
+    /*if(numeroProducto.getIndeterminado()==true){
+        ui->lineEditResDec->setText("indeterminado");
+        ui->lineEditRESIEEEEXP->setText("-----");
+        ui->lineEditRESIEEESIG->setText("-------------");
+        ui->lineEditRESIEEEMAN->setText("--------------");
+        ui->lineEditResHEX->setText("");
 
-    if (!numeroProducto.getNan()){
+    }*/
+    if(numeroProducto.getInfinito() == true){
+         ui->lineEditResDec->setText("infinito");
+         ui->lineEditRESIEEEEXP->setText("-----");
+         ui->lineEditRESIEEESIG->setText("-------------");
+         ui->lineEditRESIEEEMAN->setText("--------------");
+         ui->lineEditResHEX->setText("");
+         return;
+    }else{
+        if (!numeroProducto.getNan() && !numeroProducto.getInfinito()&& !numeroProducto.getIndeterminado()){
 
 
-    ui->lineEditResDec->setText(QString::number(numeroProducto.getNum()));
-    std::cout<<numeroProducto.getNum()<<std::endl;
-    ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroProducto.getExpoBit().to_string()));
-    ui->lineEditRESIEEESIG->setText(QString::number(numeroProducto.getSing()));
-    ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroProducto.getPartFracBit().to_string()));
-} else  {
+        ui->lineEditResDec->setText(QString::number(numeroProducto.getNum()));
+        std::cout<<numeroProducto.getNum()<<std::endl;
+        ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroProducto.getExpoBit().to_string()));
+        ui->lineEditRESIEEESIG->setText(QString::number(numeroProducto.getSing()));
+        ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroProducto.getPartFracBit().to_string()));
+        }else{
         ui->lineEditResDec->setText("NaN");
         ui->lineEditRESIEEEEXP->setText("11111111");
         ui->lineEditRESIEEESIG->setText("1");
         ui->lineEditRESIEEEMAN->setText("11111111111111111111111");
+        }
+        return;
     }
     setHexaConversion();
     setHexaResultado();
+
 
 }
 void MainWindow::setHexaConversion(){

@@ -11,11 +11,26 @@
     }
     numero::numero(std::string nan){
         numIEE.nan = true;
+       // numIEE.infinito = nan;
 
         floatToIEE(0);
     }
 
     /*Funciones restantes*/
+    void numero::setInfinito(bool otro){
+        numIEE.infinito = otro;
+    }
+    bool numero::getInfinito(){
+        return numIEE.infinito;
+    }
+
+    bool numero::getIndeterminado(){
+        return numIEE.indeterminado;
+    }
+    void numero::setIndeterminado(bool otro){
+        numIEE.indeterminado = otro;
+    }
+
     void numero::floatToIEE(float num){
 
         setNum(num);

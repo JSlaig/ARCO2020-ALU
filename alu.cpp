@@ -17,19 +17,20 @@
 
     numero alu::sumaIEE()
     {
+      // Aqui se almacenara el resultado d la suma
 
-        // ===================================-SUMA-===================================
 
+        /*EJEMPLO DE USO
+         * Consulta del exponente en int del numero A ->> numeroA.getExp();
+         * Consulta del exponente en en binario (bitset<8>) ->> numeroA.getExpBit();
+         *
+         * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
+         */
         if(compruebaNumOpuetos()){
 
             numero numZero = numero(0);
 
             return numZero;
-        }else if(compruebaCero()){
-
-                 numero numZero = numero(0);
-
-                 return numZero;
         }
         /*Rellenar*/
         int signoA = numeroA.getSing();
@@ -218,23 +219,23 @@
         return resultado;
 
     }
-
-    // ===================================-MULTIPLICACION-===================================
+    // multiplicacion
     numero alu::productoIEE(){
+        std::bitset<23> partefraccionaria;
+        int t = 0;
+        int t1,t2;
+        if((numeroA.getExpoBit().to_string().compare("00000000")==0 && numeroA.getPartFracBit().to_string().compare("00000000000000000000000")==0)||
+           (numeroB.getExpoBit().to_string().compare("00000000")==0 && numeroB.getPartFracBit().to_string().compare("00000000000000000000000")==0)){
 
-
-        if((numeroA.getExpoBit().to_string() == "00000000"  && numeroA.getPartFracBit().to_string() == "00000000000000000000000" )||
-                    (numeroB.getExpoBit().to_string() == "00000000" && numeroB.getPartFracBit().to_string() == "00000000000000000000000")){
-
-                if ((numeroA.getExpoBit().to_string() == "11111111" && numeroA.getPartFracBit().to_string() == "00000000000000000000000" ) ||
-                    (numeroB.getExpoBit().to_string() == "11111111" && numeroB.getPartFracBit().to_string() == "00000000000000000000000")){
+                if ((numeroA.getExpoBit().to_string().compare("11111111")==0 && numeroA.getPartFracBit().to_string().compare("00000000000000000000000")==0) ||
+                    (numeroB.getExpoBit().to_string().compare("11111111")==0 && numeroB.getPartFracBit().to_string().compare("00000000000000000000000")==0)){
 
                     numero nan = numero("NaN");
                     return nan;
-                    }
+                }
                 numero zero = numero(0);
                 return zero;
-                }
+        }
 
 
 
@@ -301,32 +302,120 @@
             one.set(0, 1);
             bitsetAdd(prod, one);
         }
-            //Desbordamientos a infinito (overflow)
-            if(expSol>128){
-                expSol=128;
-                prod.reset();
-            //Desbordamiento a 0 (underflow)
-            } else if(expSol<-126){
-                int despl = 1-expSol;
-                if(despl< 23){
-                    prod >>= despl;
-                    expSol = -126;
-                }
-            }
+
+
         std::bitset<24> manSol;
         for(int i = 0; i<24; i++){
             manSol[i] = prod[i+24];
         }
+
+        if(expSol>128){
+                    expSol=128;
+                    prod.reset();
+                    numero infinito;
+                    infinito.setInfinito(true);
+
+                    return infinito;
+        }
+
+        int expMinimo=-126;
+         // comprobacion de desbordamientos
+        if (expSol <-126){
+            std::cout<<"resultado denormal"<<std::endl;
+            t = expMinimo - expSol;
+
+
+            if (t >= (int)manSol.size()){
+                numero indeterminado;
+                indeterminado.setIndeterminado(true);
+                return indeterminado;
+
+            } else {
+
+                prod>>=t;
+                expSol = expMinimo;
+              }
+            for (int i = 24; i <48;i++){
+                partefraccionaria[i-24] = prod[i];
+            }
+            numero denormal;
+            denormal.setSing(signSol);
+            denormal.setExpoBit(expSol);
+            denormal.setPartFracBit(partefraccionaria.to_ulong());
+            return denormal;
+        }
+
+         // ANALISIS DE OPERANDOS DENORMALES
+        if (esDenormal(numeroA) ==1 || esDenormal(numeroB)==1){
+            std::cout<<"entramos en operandos denormales"<<std::endl;
+            // CASO 1
+            if (expSol <expMinimo){
+                std::cout<<"estas dentro del caso 1 del analisis de operandos denormales"<<std::endl;
+                std::cout<<"resultado denormal"<<std::endl;
+                t = expMinimo - expSol;
+                if (t >= (int)manSol.size()){
+                    manSol>>=t;
+                    std::cout<<"existe underflow"<<std::endl;
+                } else {
+                    prod<<=t;
+                    std::cout<<"resultado deberia ser denormal"<<std::endl;
+                    expSol = -126;
+                }
+               /* numero denormalizado;
+
+                    denormalizado.setSing(signSol);
+                    denormalizado.setPartFracBit(partefraccionaria.to_ulong());
+                    denormalizado.setExpoBit(expSol);
+                    denormalizado.setNum(denormalizado.IEEtoFloat(0,signSol,partefraccionaria.to_ulong()));
+
+
+                return denormalizado;*/
+
+            }
+
+            // CASO 2
+            if (expSol == -126){
+                t1 = expSol - expMinimo;
+                t2 = calculaK(prod);
+                t = minimo(t1, t2);
+                expSol = expSol-t;
+                prod = desplazarIzquierda(prod,t,0);
+            }
+            for(int i = 0; i<24; i++){
+                manSol[i] = prod[i+24];
+            }
+            for (int i = 0; i <23; i++){
+                partefraccionaria[i] = manSol[i];
+            }
+
+                numero denormalizado;
+
+                denormalizado.setSing(signSol);
+                denormalizado.setPartFracBit(partefraccionaria.to_ulong());
+                denormalizado.setExpoBit(0);
+                denormalizado.setNum(denormalizado.IEEtoFloat(0,signSol,partefraccionaria.to_ulong()));
+
+
+            return denormalizado;
+        }
+
+        // actualizo mantisa solucion
+        for(int i = 0; i<24; i++){
+            manSol[i] = prod[i+24];
+        }
+
+
+
         std::cout<<"signo de solucion : "<<signSol<<std::endl;
         std::cout<<"exponente de solucion : "<<expSol<<std::endl;
         std::cout<<"mantisa de solucion : "<<manSol<<std::endl;
         std::cout<<"Longitud de solucion : "<<manSol.size()<<std::endl;
 
-        std::bitset<23> partefraccionaria;
+
         for (int i = 0; i <23; i++){
             partefraccionaria[i] = manSol[i];
         }
-         numero resultado;
+        numero resultado;
         float numero1 = numeroA.getNum();
         float numero2 = numeroB.getNum();
         resultado.setSing(signSol);
@@ -340,11 +429,25 @@
         return resultado;
     }
 
-    // ===================================-DIVISION-===================================
+    // CIERTO: DEVUELVE 1
+    // FALSO:: DEVUELVE -1
 
-    numero alu::division(){
 
+    int alu::esDenormal (numero num){
+
+        if((num.getSing()==0 && num.getExpoBit().to_ulong()== 0 &&num.getPartFracBit().to_ulong()!=0 ) ||(num.getSing()==1 && num.getExpoBit().to_ulong()== 0 &&num.getPartFracBit().to_ulong()!=0))
+        {
+            return 1;
+        }
+            else
+        {
+                 return -1;
+
+
+        }
     }
+
+
 
     std::bitset<24> alu::complemento2(std::bitset<24> p)
     {
@@ -387,6 +490,21 @@
 
             return p;
     }
+    std::bitset<48> alu::desplazarIzquierda(std::bitset<48> p, int d, int bit)
+    {
+
+        //std::cout << "p antes izquierda-> " << p.to_string() << std::endl;
+
+        for(int i = 0; i < d; i++){
+                for(int i = (int) (p.size() - 1); i >= 0; i--){
+                    p.set(i, p[i-1]);
+                }
+                p.set(0 , bit);
+            }
+        //std::cout << "p despues izquierda-> " << p.to_string() << std::endl;
+
+            return p;
+    }
 
     int alu::calculaK(std::bitset<24> p)
     {
@@ -397,6 +515,17 @@
                 }
     return k;
     }
+
+    int alu::calculaK(std::bitset<48> p)
+    {
+        int i = (int)p.size()-1,k = 0;
+                while (!p[i]) {
+                    k++;
+                    i--;
+                }
+    return k;
+    }
+
 
     std::bitset<24> alu::sumaUno(std::bitset<24> p)
     {
@@ -564,12 +693,13 @@ std::string alu::hexadecimal(std::string cadena){
         }
     }
 
-    bool alu::compruebaCero(){
+    int alu::minimo(int t1, int t2){
 
-        if(numeroA.getNum() == 0 && numeroB.getNum() == 0){
-                 return true;
-        }
-                 return false;
+       if (t1 < t2){
+           return t1;
+       } else {
+           return t2;
+       }
     }
 
     //Acarreo Suma
