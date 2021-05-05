@@ -398,6 +398,48 @@
             return denormalizado;
         }
 
+        // CASO 3
+
+        if (expSol == -126){
+
+            if(expSol>128){
+                        expSol=128;
+                        prod.reset();
+                        numero infinito;
+                        infinito.setInfinito(true);
+                        infinito.setSing(signSol);
+                        return infinito;
+            }
+
+            int expMinimo=-126;
+             // comprobacion de desbordamientos
+            if (expSol <-126){
+                std::cout<<"resultado denormal"<<std::endl;
+                t = expMinimo - expSol;
+
+
+                if (t >= (int)manSol.size()){
+                    numero indeterminado;
+                    indeterminado.setIndeterminado(true);
+                    return indeterminado;
+
+                } else {
+
+                    prod>>=t;
+                    expSol = expMinimo;
+                  }
+                for (int i = 24; i <48;i++){
+                    partefraccionaria[i-24] = prod[i];
+                }
+                numero denormal;
+                denormal.setSing(signSol);
+                denormal.setExpoBit(expSol);
+                denormal.setPartFracBit(partefraccionaria.to_ulong());
+                return denormal;
+            }
+        }
+
+
         // actualizo mantisa solucion
         for(int i = 0; i<24; i++){
             manSol[i] = prod[i+24];
