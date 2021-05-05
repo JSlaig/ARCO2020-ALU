@@ -89,6 +89,7 @@ void MainWindow::on_pushButtonPRODUCTO_released()
 {
 
     resetResultado();
+
     float numA = ui->lineEditNum1->text().toFloat();
     float numB = ui->lineEditNum2->text().toFloat();
 
@@ -132,6 +133,9 @@ void MainWindow::on_pushButtonPRODUCTO_released()
         ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroProducto.getExpoBit().to_string()));
         ui->lineEditRESIEEESIG->setText(QString::number(numeroProducto.getSing()));
         ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroProducto.getPartFracBit().to_string()));
+        setHexaConversion();
+        setHexaResultado();
+
         }else{
         ui->lineEditResDec->setText("NaN");
         ui->lineEditRESIEEEEXP->setText("11111111");
@@ -140,9 +144,6 @@ void MainWindow::on_pushButtonPRODUCTO_released()
         }
         return;
     }
-    setHexaConversion();
-    setHexaResultado();
-
 
 }
 void MainWindow::setHexaConversion(){
