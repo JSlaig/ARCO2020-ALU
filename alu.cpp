@@ -21,6 +21,12 @@
             numero numZero = numero(0);
 
             return numZero;
+
+        }else if(compruebaCero(numeroA,numeroB)){
+
+            numero Zero = numero(0);
+            return Zero;
+
         }
         /*Rellenar*/
         int signoA = numeroA.getSing();
@@ -713,4 +719,9 @@ std::string alu::hexadecimal(std::string cadena){
             x[i] = fullAdder(x[i], y[i], carry);
         }
         return carry;
+    }
+
+    bool alu::compruebaCero(numero numeroA, numero numeroB){
+
+        return (numeroA.getNum() == 0 && numeroB.getNum() == 0);
     }

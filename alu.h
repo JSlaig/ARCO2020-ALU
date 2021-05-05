@@ -41,6 +41,8 @@ public:
     bool bitsetAdd(std::bitset<48>& x, const std::bitset<48>& y);
     bool bitsetAdd(std::bitset<24>& x, const std::bitset<24>& y);
     int compruebaDenormal(int);
+
+    bool compruebaCero(numero numeroA, numero numeroB);
     numero denormal();
 
 
