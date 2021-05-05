@@ -22,33 +22,6 @@ MainWindow::~MainWindow()
 }
 
 
-
-void MainWindow::on_pushButtonCONVERSOR_released()
-{
-
-    //alU = alu(ui->lineEditNum1->text(),ui->lineEditNum2->text());
-       float numA = ui->lineEditNum1->text().toFloat();
-       float numB = ui->lineEditNum2->text().toFloat();
-
-       std::string prefijo = "0x";
-       std::string prefijo2;
-       prefijo2 = prefijo;
-       alU = alu();
-
-       /*Conversion FloatToIEE*/
-       ui->lineEditNum1IEEESIG->setText(alU.returnNum1('s'));
-       ui->lineEditNum1IEEEEXP->setText(alU.returnNum1('e'));
-       ui->lineEditNum1IEEEMAN->setText(alU.returnNum1('f'));
-
-       ui->lineEditNum2IEEESIG->setText(alU.returnNum2('s'));
-       ui->lineEditNum2IEEEEXP->setText(alU.returnNum2('e'));
-       ui->lineEditNum2IEEEMAN->setText(alU.returnNum2('f'));
-
-       setHexaConversion();
-       setHexaResultado();
-
-}
-
 void MainWindow::resetResultado()
 {
         ui->lineEditRESIEEESIG->setText("");
@@ -61,7 +34,6 @@ void MainWindow::resetResultado()
 void MainWindow::on_pushButtonSUMA_released()
 {
         resetResultado();
-        MainWindow::on_pushButtonCONVERSOR_released();
 
         float numA = ui->lineEditNum1->text().toFloat();
         float numB = ui->lineEditNum2->text().toFloat();
@@ -77,7 +49,7 @@ void MainWindow::on_pushButtonSUMA_released()
         ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroSuma.getPartFracBit().to_string()));
 
        setHexaConversion();
-        setHexaResultado();
+       setHexaResultado();
 }
 
 void MainWindow::on_pushButtonRESET_released()
@@ -115,7 +87,7 @@ void MainWindow::on_pushButtonPRODUCTO_released()
     float numB = ui->lineEditNum2->text().toFloat();
 
     alU = alu();
-     MainWindow::on_pushButtonCONVERSOR_released();
+
     numero numeroProducto;
     numeroProducto = alU.productoIEE(numA,numB);
 

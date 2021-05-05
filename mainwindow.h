@@ -17,8 +17,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButtonCONVERSOR_released();
-
     void on_pushButtonSUMA_released();
 
     void on_pushButtonRESET_released();
