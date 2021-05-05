@@ -10,12 +10,10 @@ class alu
 public:
 
     alu();
-    alu(float numA, float numB);
-
     /*funciones*/
 
-    numero sumaIEE();
-    numero productoIEE();
+    numero sumaIEE(float numA, float numB);
+    numero productoIEE(float numA, float numB);
     int minimo(int t1, int t2);
     std::bitset<24> complemento2(std::bitset<24>);
     std::bitset<24> desplazarDerecha(std::bitset<24> p,int d, int bit);
