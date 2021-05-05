@@ -476,7 +476,7 @@
 
     int alu::esDenormal (numero num){
 
-        if((num.getSing()==0 && num.getExpoBit().to_ulong()== 0 &&num.getPartFracBit().to_ulong()!=0 ) ||(num.getSing()==1 && num.getExpoBit().to_ulong()== 0 &&num.getPartFracBit().to_ulong()!=0))
+        if((num.getSing()==0 && num.getExpoBit().to_string().compare("00000000")==0 &&num.getPartFracBit().to_string().compare("00000000000000000000000")==0 ) ||(num.getSing()==1 && num.getExpoBit().to_string().compare("00000000")==0 &&num.getPartFracBit().to_string().compare("00000000000000000000000")==0))
         {
             return 1;
         }

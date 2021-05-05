@@ -119,9 +119,9 @@ void MainWindow::on_pushButtonPRODUCTO_released()
         }else{
             ui->lineEditResDec->setText("-infinito");
         }
-         ui->lineEditRESIEEEEXP->setText("-----");
-         ui->lineEditRESIEEESIG->setText("-------------");
-         ui->lineEditRESIEEEMAN->setText("--------------");
+         ui->lineEditRESIEEEEXP->setText("11111111");
+         ui->lineEditRESIEEESIG->setText(QString::number(numeroProducto.getSing()));
+         ui->lineEditRESIEEEMAN->setText("00000000000000000000000");
          ui->lineEditResHEX->setText("");
          return;
     }else{
