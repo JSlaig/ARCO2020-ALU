@@ -31,7 +31,7 @@ private slots:
 
     void setHexaConversion();
 
-    void setConversion();
+    void setConversion(numero,numero);
 
 private:
     Ui::MainWindow *ui;

@@ -49,7 +49,7 @@ void MainWindow::on_pushButtonSUMA_released()
         numero numeroSuma;
         numeroSuma = alU.sumaIEE(numeroA,numeroB);
 
-        setConversion();
+        setConversion(numeroA,numeroB);
 
         ui->lineEditResDec->setText(QString::number(numeroSuma.getNum()));
         ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroSuma.getExpoBit().to_string()));
@@ -62,8 +62,6 @@ void MainWindow::on_pushButtonSUMA_released()
 
 void MainWindow::on_pushButtonRESET_released()
 {
-
-
 
     ui->lineEditNum1->setText("");
     ui->lineEditNum2->setText("");
@@ -103,6 +101,8 @@ void MainWindow::on_pushButtonPRODUCTO_released()
 
     numero numeroProducto;
     numeroProducto = alU.productoIEE(numeroA,numeroB);
+
+    setConversion(numeroA,numeroB);
 
     /*if(numeroProducto.getIndeterminado()==true){
         ui->lineEditResDec->setText("indeterminado");
@@ -195,18 +195,17 @@ void MainWindow::setHexaResultado(){
     ui->lineEditResHEX->setText(res1);
 
 }
-void MainWindow::setConversion(){
-
-           float numA = ui->lineEditNum1->text().toFloat();
-           float numB = ui->lineEditNum2->text().toFloat();
+void MainWindow::setConversion(numero numA, numero numB){
 
            alU = alu();
            /*Conversion FloatToIEE*/
-           ui->lineEditNum1IEEESIG->setText(alU.returnNum1('s'));
-           ui->lineEditNum1IEEEEXP->setText(alU.returnNum1('e'));
-           ui->lineEditNum1IEEEMAN->setText(alU.returnNum1('f'));
-           ui->lineEditNum2IEEESIG->setText(alU.returnNum2('s'));
-           ui->lineEditNum2IEEEEXP->setText(alU.returnNum2('e'));
-           ui->lineEditNum2IEEEMAN->setText(alU.returnNum2('f'));
+           /*Numero 1*/
+           ui->lineEditNum1IEEESIG->setText(QString::number(numA.getSing()));
+           ui->lineEditNum1IEEEEXP->setText(QString::fromStdString(numA.getExpoBit().to_string()));
+           ui->lineEditNum1IEEEMAN->setText(QString::fromStdString(numA.getPartFracBit().to_string()));
+           /*Numero 2*/
+           ui->lineEditNum2IEEESIG->setText(QString::number(numB.getSing()));
+           ui->lineEditNum2IEEEEXP->setText(QString::fromStdString(numB.getExpoBit().to_string()));
+           ui->lineEditNum2IEEEMAN->setText(QString::fromStdString(numB.getPartFracBit().to_string()));
 }
 
