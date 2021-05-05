@@ -187,7 +187,7 @@
         //Suma = (SignoSuma) * MantisaSuma * 2Exp
         QString suma;
 
-        suma.append(signoSuma);//append(exponente_Suma); //append(QString::fromStdString(normalizaMantisa(mantisaSuma).to_string()));
+        suma.append(signoSuma);
 
         std::cout << suma.toStdString() <<std::endl;
 
@@ -236,16 +236,6 @@
                 return zero;
         }
 
-
-
-
-        //Ahora no son los dos cerapios
-
-       // modificar
-
-
-        //MANTISSA_SIZE = 23
-        // std::bitset<23>partFracBit; es lo q  hay q obtener en getMantissa
         std::bitset<24> A;
         for(int i = 0; i<23; i++){
             A[i]=numeroA.getPartFracBit()[i];
@@ -277,9 +267,9 @@
         int expSol = expA-127 + expB-127;
     // 3.
         //3.1
-        bool carry;
+        bool c;
         std::bitset<48> prod;
-        prod = bitsetMultiply(A, B,carry);
+        prod = productoSinSigno(A, B,c);
         //3.2
         if(!prod[47]){
             prod<<=1;
@@ -299,7 +289,7 @@
         if((round && sticky) || (round && !sticky && prod[24])){
             std::bitset<prod.size()> one;
             one.set(0, 1);
-            bitsetAdd(prod, one);
+            sumaAuxiliar(prod, one);
         }
 
 
@@ -360,15 +350,6 @@
                     std::cout<<"resultado deberia ser denormal"<<std::endl;
                     expSol = -126;
                 }
-               /* numero denormalizado;
-
-                    denormalizado.setSing(signSol);
-                    denormalizado.setPartFracBit(partefraccionaria.to_ulong());
-                    denormalizado.setExpoBit(expSol);
-                    denormalizado.setNum(denormalizado.IEEtoFloat(0,signSol,partefraccionaria.to_ulong()));
-
-
-                return denormalizado;*/
 
             }
 
@@ -470,8 +451,7 @@
         return resultado;
     }
 
-    // CIERTO: DEVUELVE 1
-    // FALSO:: DEVUELVE -1
+
 
 
     int alu::esDenormal (numero num){
@@ -719,24 +699,24 @@ std::string alu::hexadecimal(std::string cadena){
     }
 
     //Acarreo Suma
-    bool alu::fullAdder(bool b1, bool b2, bool& carry){
-        bool sum = (b1 ^ b2) ^ carry;
-        carry = (b1 && b2) || (b1 && carry) || (b2 && carry);
+    bool alu::acarreo(bool b1, bool b2, bool& c){
+        bool sum = (b1 ^ b2) ^ c;
+        c = (b1 && b2) || (b1 && c) || (b2 && c);
         return sum;
     }
     //metodos nuevos
          //Multiplicacion
-         std::bitset<48> alu::bitsetMultiply(std::bitset<24>& x, const std::bitset<24>& y, bool &carry){
+         std::bitset<48> alu::productoSinSigno(std::bitset<24>& x, const std::bitset<24>& y, bool &c){
 
              std::bitset<24> P;
              std::bitset<48> result;
              for ( int i = 0; i<24;i++){
-                 if(x[0]) carry = bitsetAdd(P, y);
+                 if(x[0]) c = sumaAuxiliar(P, y);
                  x >>= 1;
                  x[23] = P[0];
                  P >>= 1;
-                 P[23] = carry;
-                 carry >>= 1;
+                 P[23] = c;
+                 c >>= 1;
 
              }
 
@@ -749,21 +729,21 @@ std::string alu::hexadecimal(std::string cadena){
 
     // diversas sumas
 
-    bool alu::bitsetAdd(std::bitset<48>& x, const std::bitset<48>& y){
-        bool carry = false;
+    bool alu::sumaAuxiliar(std::bitset<48>& x, const std::bitset<48>& y){
+        bool c = false;
         for (int i = 0; i < 24; i++){
-            x[i] = fullAdder(x[i], y[i], carry);
+            x[i] = acarreo(x[i], y[i], c);
         }
-        return carry;
+        return c;
     }
 
 
-    bool alu::bitsetAdd(std::bitset<24>& x, const std::bitset<24>& y){
-        bool carry = false;
+    bool alu::sumaAuxiliar(std::bitset<24>& x, const std::bitset<24>& y){
+        bool c = false;
         for (int i = 0; i < 24; i++){
-            x[i] = fullAdder(x[i], y[i], carry);
+            x[i] = acarreo(x[i], y[i], c);
         }
-        return carry;
+        return c;
     }
 
     bool alu::compruebaCero(numero numeroA, numero numeroB){
