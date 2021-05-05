@@ -16,7 +16,7 @@
          *
          * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
          */
-        if(compruebaNumOpuetos()){
+        if(compruebaNumOpuestos(numeroA,numeroB)){
 
             numero numZero = numero(0);
 
@@ -588,32 +588,6 @@
 
     /******************************************************************************/
 
-    QString alu::returnNum1(char s){
-
-        switch(s){
-
-        case 's': return QString::number(numeroA.getSing());
-            break;
-        case 'e': return QString::fromStdString(numeroA.getExpoBit().to_string());
-            break;
-        case 'f': return QString::fromStdString(numeroA.getPartFracBit().to_string());
-            break;
-        }
-    }
-
-    QString alu::returnNum2(char s){
-
-        switch(s){
-
-        case 's': return QString::number(numeroB.getSing());
-            break;
-        case 'e': return QString::fromStdString(numeroB.getExpoBit().to_string());
-            break;
-        case 'f': return QString::fromStdString(numeroB.getPartFracBit().to_string());
-            break;
-        }
-    }
-
 std::string alu::hexadecimal(std::string cadena){
         //pasa cada 4 dígitos de binario a uno en hexadecimal
             if(cadena=="0000"){
@@ -674,7 +648,7 @@ std::string alu::hexadecimal(std::string cadena){
         return cad1 + cad2 + cad3;
     }
 
-    bool alu::compruebaNumOpuetos(){
+    bool alu::compruebaNumOpuestos(numero numeroA, numero numeroB){
 
         if((numeroA.getSing() != numeroB.getSing()) && (numeroA.getExpoBit() == numeroB.getExpoBit()) && numeroA.getPartFracBit() == numeroB.getPartFracBit()){
 

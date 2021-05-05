@@ -34,21 +34,20 @@ public:
     std::string cadenaConcatenadaBinaria(const std::string &cad1,const std::string &cad2,const std::string &cad3 );
     std::string hexadecimal(std::string cadena);
     std::string conversorBinarioHexadecimal(std::string binario);
-    bool compruebaNumOpuetos();
+    bool compruebaNumOpuestos(numero numeroA, numero numeroB);
+
      std::bitset<48> bitsetMultiply(std::bitset<24>& x, const std::bitset<24>& y, bool &carry);
     bool fullAdder(bool b1, bool b2, bool& carry);
     bool bitsetAdd(std::bitset<48>& x, const std::bitset<48>& y);
     bool bitsetAdd(std::bitset<24>& x, const std::bitset<24>& y);
     int compruebaDenormal(int);
-    QString returnNum1(char);
-    QString returnNum2(char);
     numero denormal();
 
 
 private:
 
-    numero numeroA;
-    numero numeroB;
+    //numero numeroA;
+    //numero numeroB;
 };
 
 #endif // ALU_H
