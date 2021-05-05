@@ -4,6 +4,7 @@
     alu::alu(){
     }
 
+             // ===================================-SUMA-===================================
     numero alu::sumaIEE(numero numeroA, numero numeroB)
     {
 
@@ -215,7 +216,8 @@
         return resultado;
 
     }
-    // multiplicacion
+
+         // ===================================-MULTIPLICACION-===================================
     numero alu::productoIEE(numero numeroA, numero numeroB){
 
         std::bitset<23> partefraccionaria;
