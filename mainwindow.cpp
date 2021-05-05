@@ -38,10 +38,18 @@ void MainWindow::on_pushButtonSUMA_released()
         float numA = ui->lineEditNum1->text().toFloat();
         float numB = ui->lineEditNum2->text().toFloat();
 
+        /*Creacion de los dos numeros*/
+        numero numeroA = numero(numA);
+        numero numeroB = numero(numB);
+
+        /*Creacion del objeto alu*/
         alU = alu();
 
+        /*Resultado*/
         numero numeroSuma;
-        numeroSuma = alU.sumaIEE(numA,numB);
+        numeroSuma = alU.sumaIEE(numeroA,numeroB);
+
+        setConversion();
 
         ui->lineEditResDec->setText(QString::number(numeroSuma.getNum()));
         ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroSuma.getExpoBit().to_string()));
@@ -86,10 +94,15 @@ void MainWindow::on_pushButtonPRODUCTO_released()
     float numA = ui->lineEditNum1->text().toFloat();
     float numB = ui->lineEditNum2->text().toFloat();
 
+    /*Creacion de los dos numeros*/
+    numero numeroA = numero(numA);
+    numero numeroB = numero(numB);
+
+    /*Creacion del objeto alu*/
     alU = alu();
 
     numero numeroProducto;
-    numeroProducto = alU.productoIEE(numA,numB);
+    numeroProducto = alU.productoIEE(numeroA,numeroB);
 
     /*if(numeroProducto.getIndeterminado()==true){
         ui->lineEditResDec->setText("indeterminado");
@@ -181,5 +194,19 @@ void MainWindow::setHexaResultado(){
 
     ui->lineEditResHEX->setText(res1);
 
+}
+void MainWindow::setConversion(){
+
+           float numA = ui->lineEditNum1->text().toFloat();
+           float numB = ui->lineEditNum2->text().toFloat();
+
+           alU = alu();
+           /*Conversion FloatToIEE*/
+           ui->lineEditNum1IEEESIG->setText(alU.returnNum1('s'));
+           ui->lineEditNum1IEEEEXP->setText(alU.returnNum1('e'));
+           ui->lineEditNum1IEEEMAN->setText(alU.returnNum1('f'));
+           ui->lineEditNum2IEEESIG->setText(alU.returnNum2('s'));
+           ui->lineEditNum2IEEEEXP->setText(alU.returnNum2('e'));
+           ui->lineEditNum2IEEEMAN->setText(alU.returnNum2('f'));
 }
 

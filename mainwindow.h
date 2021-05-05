@@ -31,6 +31,8 @@ private slots:
 
     void setHexaConversion();
 
+    void setConversion();
+
 private:
     Ui::MainWindow *ui;
     alu alU;

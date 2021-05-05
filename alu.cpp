@@ -4,11 +4,8 @@
     alu::alu(){
     }
 
-    numero alu::sumaIEE(float numA, float numB)
+    numero alu::sumaIEE(numero numeroA, numero numeroB)
     {
-        /*Creacion de dos numeros Objeto*/
-        numeroA = numero(numA);
-        numeroB = numero(numB);
 
       // Aqui se almacenara el resultado d la suma
 
@@ -213,11 +210,7 @@
 
     }
     // multiplicacion
-    numero alu::productoIEE(float numA, float numB){
-
-        /*Creacion de dos numeros Objeto*/
-        numeroA = numero(numA);
-        numeroB = numero(numB);
+    numero alu::productoIEE(numero numeroA, numero numeroB){
 
         std::bitset<23> partefraccionaria;
         int t = 0;
