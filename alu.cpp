@@ -1,22 +1,48 @@
 #include "alu.h"
 #include<iostream>
+#define MAXIMO 254
+#define MINIMO 1
 
     alu::alu(){
     }
 
              // ===================================-SUMA-===================================
-    numero alu::sumaIEE(numero numeroA, numero numeroB)
-    {
+    numero alu::sumaIEE(numero numeroA, numero numeroB){
 
-      // Aqui se almacenara el resultado d la suma
+    std::bitset<24> mantisaA;
+    std::bitset<24> mantisaB;
+
+        /*Comprobacion de numeros Denormales*/
+        /*numeroA*/
+
+        if(numeroA.getExpo() < MINIMO){
+            numeroA.setExpo(MINIMO);
+            mantisaA = numeroA.getMantisa(true);
+
+        }else{
+            mantisaA = numeroA.getMantisa(false);
+        }
+
+        /*numeroB*/
+
+        if(numeroB.getExpo() < MINIMO){
+            numeroB.setExpo(MINIMO);
+            mantisaB = numeroB.getMantisa(true);
+
+        }else{
+            mantisaB = numeroB.getMantisa(false);
+
+        }
+
+        if(numeroA.getExpo() > MAXIMO || numeroB.getExpo() > MAXIMO){
+
+            /*Numero infinito*/
+            std::cout << "NUMERO DETECTADO COMO INF" << std::endl;
 
 
-        /*EJEMPLO DE USO
-         * Consulta del exponente en int del numero A ->> numeroA.getExp();
-         * Consulta del exponente en en binario (bitset<8>) ->> numeroA.getExpBit();
-         *
-         * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
-         */
+
+        }
+
         if(compruebaNumOpuestos(numeroA,numeroB)){
 
             numero numZero = numero(0);
@@ -32,14 +58,16 @@
         /*Rellenar*/
         int signoA = numeroA.getSing();
         int signoB = numeroB.getSing();
+
         std::bitset<8> exponenteA_Bit = numeroA.getExpoBit();
         std::bitset<8> exponenteB_Bit = numeroB.getExpoBit();
+
         int exponenteA = numeroA.getExpo();
         int exponenteB = numeroB.getExpo();
         int parteFracA = numeroA.getPartFrac();
         int parteFracB = numeroB.getPartFrac();
-        std::bitset<24> mantisaA = numeroA.getMantisa();
-        std::bitset<24> mantisaB = numeroB.getMantisa();
+
+
         std::bitset<24> mantisaSuma;
         std::bitset<24> mantisaSumaFinal;
 
@@ -61,6 +89,7 @@
 
         /*Paso 2*/      
         if(exponenteA<exponenteB){
+
             signoA = numeroB.getSing();
             signoB = numeroA.getSing();
             exponenteA_Bit = numeroB.getExpoBit();
@@ -70,8 +99,8 @@
             parteFracA = numeroB.getPartFrac();
             parteFracB = numeroA.getPartFrac();
 
-            mantisaA = numeroB.getMantisa();
-            mantisaB = numeroA.getMantisa();
+            mantisaA = numeroB.getMantisa(false);
+            mantisaB = numeroA.getMantisa(false);
         }
 
         /*Paso 3*/
