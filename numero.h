@@ -33,7 +33,7 @@ public:
     void setSing(unsigned int);
 
     //===========================
-    std::bitset<24> getMantisa();
+    std::bitset<24> getMantisa(bool denormal);
     void setMantisa(std::bitset<24> mantisa);
     void setInfinito(std::string otro);
     //std::string getInfinito();

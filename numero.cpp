@@ -95,7 +95,7 @@
     }
 
     //===========================
-    std::bitset<24> numero::getMantisa(){
+    std::bitset<24> numero::getMantisa(bool denormal){
 
         for(int i = 0;i < 23;i++){
             numIEE.mantisaBit.set(i,numIEE.partFracBit[i]);
