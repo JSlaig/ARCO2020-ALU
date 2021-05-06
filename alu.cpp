@@ -38,8 +38,9 @@
 
             /*Numero infinito*/
             std::cout << "NUMERO DETECTADO COMO INF" << std::endl;
-
-
+            numero inf = numero(0);
+            inf.setInfinito(true);
+            return inf;
 
         }
 
