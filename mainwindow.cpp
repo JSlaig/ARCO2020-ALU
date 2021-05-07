@@ -158,6 +158,8 @@ void MainWindow::on_pushButtonPRODUCTO_released()
         }
         return;
     }
+    setHexaConversion();
+    setHexaResultado();
 
 }
 void MainWindow::setHexaConversion(){
