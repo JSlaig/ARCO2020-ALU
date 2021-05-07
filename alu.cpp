@@ -15,7 +15,7 @@
         /*Comprobacion de numeros Denormales*/
         /*numeroA*/
 
-        if(numeroA.getExpo() < MINIMO){
+        /*if(numeroA.getExpo() < MINIMO){
             numeroA.setExpo(MINIMO);
             mantisaA = numeroA.getMantisa(true);
 
@@ -25,14 +25,17 @@
 
         /*numeroB*/
 
-        if(numeroB.getExpo() < MINIMO){
+        /*if(numeroB.getExpo() < MINIMO){
             numeroB.setExpo(MINIMO);
             mantisaB = numeroB.getMantisa(true);
 
         }else{
             mantisaB = numeroB.getMantisa(false);
 
-        }
+        }*/
+
+    mantisaA = numeroA.getMantisa(false);
+    mantisaB = numeroB.getMantisa(false);
 
         if(numeroA.getExpo() > MAXIMO || numeroB.getExpo() > MAXIMO){
 
