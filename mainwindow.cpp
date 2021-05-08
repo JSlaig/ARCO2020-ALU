@@ -122,7 +122,8 @@ void MainWindow::on_pushButtonPRODUCTO_released()
          ui->lineEditRESIEEEEXP->setText("11111111");
          ui->lineEditRESIEEESIG->setText(QString::number(numeroProducto.getSing()));
          ui->lineEditRESIEEEMAN->setText("00000000000000000000000");
-         ui->lineEditResHEX->setText("");
+         setHexaConversion();
+         setHexaResultado();
          return;
     }else{
         if (!numeroProducto.getNan() && !numeroProducto.getInfinito()&& !numeroProducto.getIndeterminado()){
@@ -138,9 +139,10 @@ void MainWindow::on_pushButtonPRODUCTO_released()
 
         }else{
         ui->lineEditResDec->setText("NaN");
-        ui->lineEditRESIEEEEXP->setText("11111111");
-        ui->lineEditRESIEEESIG->setText("1");
-        ui->lineEditRESIEEEMAN->setText("11111111111111111111111");
+        ui->lineEditRESIEEEEXP->setText("--------");
+        ui->lineEditRESIEEESIG->setText("-");
+        ui->lineEditRESIEEEMAN->setText("----------------------");
+        ui->lineEditResHEX->setText("------------");
         }
         return;
     }
@@ -218,6 +220,8 @@ void MainWindow::on_pushButtonDIVISION_released()
     float numA = ui->lineEditNum1->text().toFloat();
     float numB = ui->lineEditNum2->text().toFloat();
 
+    setConversion(numA,numB);
+
     /*Creacion de los dos numeros*/
     numero numeroA = numero(numA);
     numero numeroB = numero(numB);
@@ -250,8 +254,8 @@ void MainWindow::on_pushButtonDIVISION_released()
             }
              ui->lineEditRESIEEEEXP->setText("11111111");
              ui->lineEditRESIEEESIG->setText(QString::number(numeroDivision.getSing()));
-             ui->lineEditRESIEEEMAN->setText("00000000000000000000000");
-             ui->lineEditResHEX->setText("");
+             ui->lineEditRESIEEEMAN->setText("00000000000000000000000");     
+
              setHexaConversion();
              setHexaResultado();
              return;
@@ -276,10 +280,11 @@ void MainWindow::on_pushButtonDIVISION_released()
         }else{
             ui->lineEditResDec->setText("-infinito");
         }
-        ui->lineEditRESIEEEEXP->setText("--------");
-        ui->lineEditRESIEEESIG->setText("-");
-        ui->lineEditRESIEEEMAN->setText("-----------------------");
-        ui->lineEditResHEX->setText("------------");
+        ui->lineEditRESIEEEEXP->setText("11111111");
+        ui->lineEditRESIEEESIG->setText(QString::number(numeroDivision.getSing()));
+        ui->lineEditRESIEEEMAN->setText("00000000000000000000000");
+        setHexaConversion();
+        setHexaResultado();
     }
 
 
