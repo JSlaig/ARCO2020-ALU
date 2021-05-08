@@ -33,6 +33,8 @@ private slots:
 
     void setConversion(numero,numero);
 
+    void on_pushButtonDIVISION_released();
+
 private:
     Ui::MainWindow *ui;
     alu alU;

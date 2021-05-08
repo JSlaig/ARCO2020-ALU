@@ -51,20 +51,6 @@ void MainWindow::on_pushButtonSUMA_released()
 
         setConversion(numeroA,numeroB);
 
-        if(numeroSuma.getInfinito() == true){
-            if(numeroSuma.getSing()==0){
-                ui->lineEditResDec->setText("infinito");
-            }else{
-                ui->lineEditResDec->setText("-infinito");
-            }
-             ui->lineEditRESIEEEEXP->setText("11111111");
-             ui->lineEditRESIEEESIG->setText(QString::number(numeroSuma.getSing()));
-             ui->lineEditRESIEEEMAN->setText("00000000000000000000000");
-             ui->lineEditResHEX->setText("");
-
-             return;
-        }
-
         ui->lineEditResDec->setText(QString::number(numeroSuma.getNum()));
         ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroSuma.getExpoBit().to_string()));
         ui->lineEditRESIEEESIG->setText(QString::number(numeroSuma.getSing()));
@@ -158,8 +144,6 @@ void MainWindow::on_pushButtonPRODUCTO_released()
         }
         return;
     }
-    setHexaConversion();
-    setHexaResultado();
 
 }
 void MainWindow::setHexaConversion(){
@@ -214,15 +198,86 @@ void MainWindow::setHexaResultado(){
 }
 void MainWindow::setConversion(numero numA, numero numB){
 
-           alU = alu();
-           /*Conversion FloatToIEE*/
-           /*Numero 1*/
-           ui->lineEditNum1IEEESIG->setText(QString::number(numA.getSing()));
-           ui->lineEditNum1IEEEEXP->setText(QString::fromStdString(numA.getExpoBit().to_string()));
-           ui->lineEditNum1IEEEMAN->setText(QString::fromStdString(numA.getPartFracBit().to_string()));
-           /*Numero 2*/
-           ui->lineEditNum2IEEESIG->setText(QString::number(numB.getSing()));
-           ui->lineEditNum2IEEEEXP->setText(QString::fromStdString(numB.getExpoBit().to_string()));
-           ui->lineEditNum2IEEEMAN->setText(QString::fromStdString(numB.getPartFracBit().to_string()));
+    alU = alu();
+    /*Conversion FloatToIEE*/
+    /*Numero 1*/
+    ui->lineEditNum1IEEESIG->setText(QString::number(numA.getSing()));
+    ui->lineEditNum1IEEEEXP->setText(QString::fromStdString(numA.getExpoBit().to_string()));
+    ui->lineEditNum1IEEEMAN->setText(QString::fromStdString(numA.getPartFracBit().to_string()));
+    /*Numero 2*/
+    ui->lineEditNum2IEEESIG->setText(QString::number(numB.getSing()));
+    ui->lineEditNum2IEEEEXP->setText(QString::fromStdString(numB.getExpoBit().to_string()));
+    ui->lineEditNum2IEEEMAN->setText(QString::fromStdString(numB.getPartFracBit().to_string()));
 }
 
+
+void MainWindow::on_pushButtonDIVISION_released()
+{
+    resetResultado();
+
+    float numA = ui->lineEditNum1->text().toFloat();
+    float numB = ui->lineEditNum2->text().toFloat();
+
+    /*Creacion de los dos numeros*/
+    numero numeroA = numero(numA);
+    numero numeroB = numero(numB);
+
+    /*Creacion del objeto alu*/
+    alU = alu();
+
+    /*Resultado*/
+    numero numeroDivision;
+
+
+
+    if(numeroB.getNum() != 0){
+
+        numeroDivision = alU.divisionIEE(numeroA,numeroB);
+        if(numeroDivision.getIndeterminado() == true){
+                    ui->lineEditResDec->setText("NaN");
+                    ui->lineEditRESIEEEEXP->setText("--------");
+                    ui->lineEditRESIEEESIG->setText("-");
+                    ui->lineEditRESIEEEMAN->setText("-----------------------");
+                    ui->lineEditResHEX->setText("------------");
+                    return;
+                }
+        if(numeroDivision.getInfinito() == true){
+            std::cout<<"entras en infinito de mainwindow"<<std::endl;
+            if(numeroDivision.getSing()==0){
+                ui->lineEditResDec->setText("infinito");
+            }else{
+                ui->lineEditResDec->setText("-infinito");
+            }
+             ui->lineEditRESIEEEEXP->setText("11111111");
+             ui->lineEditRESIEEESIG->setText(QString::number(numeroDivision.getSing()));
+             ui->lineEditRESIEEEMAN->setText("00000000000000000000000");
+             ui->lineEditResHEX->setText("");
+             setHexaConversion();
+             setHexaResultado();
+             return;
+        }
+        ui->lineEditResDec->setText(QString::number(numeroDivision.getNum()));
+        ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroDivision.getExpoBit().to_string()));
+        ui->lineEditRESIEEESIG->setText(QString::number(numeroDivision.getSing()));
+        ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroDivision.getPartFracBit().to_string()));
+
+       setHexaConversion();
+       setHexaResultado();
+
+
+
+    }else {
+
+        if(numeroDivision.getSing()==0){
+            ui->lineEditResDec->setText("infinito");
+        }else{
+            ui->lineEditResDec->setText("-infinito");
+        }
+        ui->lineEditRESIEEEEXP->setText("--------");
+        ui->lineEditRESIEEESIG->setText("-");
+        ui->lineEditRESIEEEMAN->setText("-----------------------");
+        ui->lineEditResHEX->setText("------------");
+    }
+
+
+}

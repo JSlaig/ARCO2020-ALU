@@ -95,30 +95,16 @@
     }
 
     //===========================
-    std::bitset<24> numero::getMantisa(bool denormal){
+    std::bitset<24> numero::getMantisa(){
 
-        if(!denormal){
-
-            for(int i = 0;i < 23;i++){
-                numIEE.mantisaBit.set(i,numIEE.partFracBit[i]);
-            //numIEE.mantisaBit[i] = numIEE.partFracBit[i];
-            }
-
-            numIEE.mantisaBit.set(23,1);
-
-            return numIEE.mantisaBit;
+        for(int i = 0;i < 23;i++){
+            numIEE.mantisaBit.set(i,numIEE.partFracBit[i]);
+        //numIEE.mantisaBit[i] = numIEE.partFracBit[i];
         }
 
-        else{
+        numIEE.mantisaBit.set(23,1);
 
-            for(int i = 0;i < 23;i++){
-                numIEE.mantisaBit.set(i,numIEE.partFracBit[i]);
-                //numIEE.mantisaBit[i] = numIEE.partFracBit[i];
-                      }
-                numIEE.mantisaBit.set(23,0);
-
-           return numIEE.mantisaBit;
-        }
+        return numIEE.mantisaBit;
     }
     void numero::setMantisa(std::bitset<24> mantisa){
         numIEE.mantisaBit = mantisa;

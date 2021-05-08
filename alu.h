@@ -5,6 +5,7 @@
 #include <QString>
 
 
+
 class alu
 {
 public:
@@ -14,6 +15,7 @@ public:
 
     numero sumaIEE(numero numA, numero numB);
     numero productoIEE(numero numA, numero numB);
+    numero divisionIEE(numero numA, numero numB);
 
     int minimo(int t1, int t2);
     std::bitset<24> complemento2(std::bitset<24>);

@@ -16,6 +16,7 @@ public:
 
     void setNum(float num);
     float getNum();
+
     //===========================
     unsigned int getPartFrac();
     std::bitset<23> getPartFracBit();
@@ -33,7 +34,7 @@ public:
     void setSing(unsigned int);
 
     //===========================
-    std::bitset<24> getMantisa(bool denormal);
+    std::bitset<24> getMantisa();
     void setMantisa(std::bitset<24> mantisa);
     void setInfinito(std::string otro);
     //std::string getInfinito();

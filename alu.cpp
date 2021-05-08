@@ -1,52 +1,24 @@
 #include "alu.h"
 #include<iostream>
-#define MAXIMO 254
-#define MINIMO 1
+#include <tgmath.h>
+#include <stdlib.h>
 
-    alu::alu(){
-    }
+    alu::alu(){}
+
 
              // ===================================-SUMA-===================================
-    numero alu::sumaIEE(numero numeroA, numero numeroB){
+    numero alu::sumaIEE(numero numeroA, numero numeroB)
+    {
 
-    std::bitset<24> mantisaA;
-    std::bitset<24> mantisaB;
+      // Aqui se almacenara el resultado d la suma
 
-        /*Comprobacion de numeros Denormales*/
-        /*numeroA*/
 
-        /*if(numeroA.getExpo() < MINIMO){
-            numeroA.setExpo(MINIMO);
-            mantisaA = numeroA.getMantisa(true);
-
-        }else{
-            mantisaA = numeroA.getMantisa(false);
-        }
-
-        /*numeroB*/
-
-        /*if(numeroB.getExpo() < MINIMO){
-            numeroB.setExpo(MINIMO);
-            mantisaB = numeroB.getMantisa(true);
-
-        }else{
-            mantisaB = numeroB.getMantisa(false);
-
-        }*/
-
-    mantisaA = numeroA.getMantisa(false);
-    mantisaB = numeroB.getMantisa(false);
-
-        if(numeroA.getExpo() > MAXIMO || numeroB.getExpo() > MAXIMO){
-
-            /*Numero infinito*/
-            std::cout << "NUMERO DETECTADO COMO INF" << std::endl;
-            numero inf = numero(0);
-            inf.setInfinito(true);
-            return inf;
-
-        }
-
+        /*EJEMPLO DE USO
+         * Consulta del exponente en int del numero A ->> numeroA.getExp();
+         * Consulta del exponente en en binario (bitset<8>) ->> numeroA.getExpBit();
+         *
+         * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
+         */
         if(compruebaNumOpuestos(numeroA,numeroB)){
 
             numero numZero = numero(0);
@@ -62,16 +34,14 @@
         /*Rellenar*/
         int signoA = numeroA.getSing();
         int signoB = numeroB.getSing();
-
         std::bitset<8> exponenteA_Bit = numeroA.getExpoBit();
         std::bitset<8> exponenteB_Bit = numeroB.getExpoBit();
-
         int exponenteA = numeroA.getExpo();
         int exponenteB = numeroB.getExpo();
         int parteFracA = numeroA.getPartFrac();
         int parteFracB = numeroB.getPartFrac();
-
-
+        std::bitset<24> mantisaA = numeroA.getMantisa();
+        std::bitset<24> mantisaB = numeroB.getMantisa();
         std::bitset<24> mantisaSuma;
         std::bitset<24> mantisaSumaFinal;
 
@@ -93,7 +63,6 @@
 
         /*Paso 2*/      
         if(exponenteA<exponenteB){
-
             signoA = numeroB.getSing();
             signoB = numeroA.getSing();
             exponenteA_Bit = numeroB.getExpoBit();
@@ -103,8 +72,8 @@
             parteFracA = numeroB.getPartFrac();
             parteFracB = numeroA.getPartFrac();
 
-            mantisaA = numeroB.getMantisa(false);
-            mantisaB = numeroA.getMantisa(false);
+            mantisaA = numeroB.getMantisa();
+            mantisaB = numeroA.getMantisa();
         }
 
         /*Paso 3*/
@@ -252,7 +221,6 @@
 
          // ===================================-MULTIPLICACION-===================================
     numero alu::productoIEE(numero numeroA, numero numeroB){
-
         std::bitset<23> partefraccionaria;
         int t = 0;
         int t1,t2;
@@ -471,34 +439,218 @@
             partefraccionaria[i] = manSol[i];
         }
         numero resultado;
+
         float numero1 = numeroA.getNum();
         float numero2 = numeroB.getNum();
+
         resultado.setSing(signSol);
+
         resultado.setPartFracBit(partefraccionaria.to_ulong());
+
+        /**/
+        resultado.setPartFrac(partefraccionaria.to_ulong());
+        resultado.setExpo(expSol+127);
+        /**/
+
         resultado.setExpoBit(expSol+127);
-         resultado.setNum(resultado.IEEtoFloat(expSol+127,signSol,partefraccionaria.to_ulong()));
+
+        resultado.setNum(resultado.IEEtoFloat(expSol+127,signSol,partefraccionaria.to_ulong()));
         float resultadoprov = resultado.IEEtoFloat(expSol+127,signSol,partefraccionaria.to_ulong());
+
         std::cout<<"numero 1: "<<numero1<<std::endl;
         std::cout<<"numero 2: "<<numero2<<std::endl;
         std::cout<<"resultado: "<<resultadoprov<<std::endl;
+
         return resultado;
     }
 
+
+    //division
+    numero alu::divisionIEE(numero numeroA, numero numeroB){
+
+        numero numberA = numeroA;
+        numero numberB = numeroB;
+        numero numberR;
+        //Caso especial infinito entre infinito
+
+                if((numeroA.getExpoBit().to_string().compare("11111111")==0 && numeroA.getPartFracBit().to_string().compare("00000000000000000000000")==0) &&
+                        (numeroB.getExpoBit().to_string().compare("11111111")==0 && numeroB.getPartFracBit().to_string().compare("00000000000000000000000")==0)){
+                    numberR.setIndeterminado(true);
+                    return numberR;
+                }
+       // if(esDenormal(numberA) == -1 && esDenormal(numberB) == -1){
+
+
+            //Paso 1: Escalado de los numeros
+            std::bitset<24> aproxA(std::string("1").append(numberA.getPartFracBit().bitset::to_string()));
+            std::cout<<"MantisaA: "<<aproxA<<std::endl;
+
+            std::bitset<24> aproxB(std::string("1").append(numberB.getPartFracBit().bitset::to_string()));
+            std::cout<<"MantisaB: "<<aproxB<<std::endl;
+
+            float escaladoA = 0.0;
+            float escaladoB = 0.0;
+
+            int power = 0;
+            for(int i = 23; i >= 0; i--){
+                escaladoA += (float) aproxA[i] * (float) pow(2.0, power);
+                escaladoB += (float) aproxB[i] * (float) pow(2.0, power);
+                power--;
+            }
+
+            std::cout<<"AproximadoA: "<<escaladoA<<std::endl;
+            std::cout<<"AproximadoB: "<<escaladoB<<std::endl;
+
+            //Paso 2: Aproximacion del inverso de B
+
+            double inversoB;
+
+
+            if(escaladoB >= 1 && escaladoB < 1.25){
+                inversoB = 1.0;
+            }else{
+                inversoB = 0.8;
+            }
+
+            std::cout<<"InversoB:"<<inversoB<<std::endl;
+
+            //Metodo de goldsmitch (placeholder de lo que tiene que hacer)
+
+            numero escaladoIEEA(escaladoA);
+
+            numero escaladoIEEB(escaladoB);
+
+            numero inversoIEEB(inversoB);
+
+            numero auxX = alu::productoIEE(escaladoIEEA, inversoIEEB);
+            numero xSiguiente(auxX.getNum());
+
+            numero auxY = alu::productoIEE(inversoIEEB, escaladoIEEB);
+            numero y(auxY.getNum());
+
+            numero dos(2);
+
+            numero precision(0);
+
+            numero r = numero();
+            numero x;
+
+            float resultado;
+
+            //hay que iterar hasta precision de 10^-4 xi y xi+1
+            do{
+                x = xSiguiente;
+
+                //r = 2 + (- yi);
+                //Cambiamos el signo para la resta
+                if(y.getSing() == 0){
+                    y.setSing(1);
+                }else{
+                    y.setSing(0);
+                }
+
+                r = alu::sumaIEE(dos, y);
+
+                //Volvemos a cambiar el signo para restablecerlo a su estado original
+                if(y.getSing() == 0){
+                    y.setSing(1);
+                }else{
+                    y.setSing(0);
+                }
+                //yi+1 = yi * r;
+                y = alu::productoIEE(y, r);
+                //xi+1 = xi * r;
+                xSiguiente = alu::productoIEE(x, r);
+
+                //Calculo precision
+
+                /*Cambiamos el signo de x para que sea una resta,
+                *no hace falta restablecerlo ya que en la siguiente iteracion
+                *se vuelve a reasignar y fuera del bucle no tiene ningun uso
+                */
+
+                if(x.getSing() == 0){
+                    x.setSing(1);
+                }else{
+                    x.setSing(0);
+                }
+                precision = alu::sumaIEE(xSiguiente, x);
+
+                resultado = abs(precision.getNum());
+
+            }while(resultado > 0.0001f);
+
+            numberR.setPartFrac(xSiguiente.getPartFrac());
+            numberR.setPartFracBit(xSiguiente.getPartFrac());
+
+            //Paso 3: Calculo del signo de la division
+            if(numberA.getSing() == 0 && numberB.getSing() == 0){
+                numberR.setSing(0);
+            }else if(numberA.getSing() == 0 && numberB.getSing() == 1){
+                numberR.setSing(1);
+            }else if(numberA.getSing() == 1 && numberB.getSing() == 0){
+                numberR.setSing(1);
+            }else{
+                numberR.setSing(0);
+            }
+
+            //Paso 4: Calculo del exponente de la division (falta pasar todas las operaciones sobre numero y alu)
+
+            //ExpA - ExpB
+            numero expoB(numeroB.getExpo());
+            if(expoB.getSing() == 0){
+                expoB.setSing(1);
+            }else{
+                expoB.setSing(0);
+            }
+            numero expoA(numeroA.getExpo());
+            numero op1 = alu::sumaIEE(expoA, expoB);
+
+            //resultado + (A * 1/B)
+            numero expoProd(xSiguiente.getExpo());
+            numero op2 = alu::sumaIEE(op1, expoProd);
+
+            numberR.setExpo(op2.getNum());
+            numberR.setExpoBit(op2.getNum());
+            std::cout<<"exponente numero A: "<<numeroA.getExpo()<<std::endl;
+            std::cout<<"exponente numero B: "<<numeroB.getExpo()<<std::endl;
+            std::cout<<"exponente numero Resultado: "<<numberR.getExpo()<<std::endl;
+          /* if (numeroA.getExpo() + numeroB.getExpo() >255){
+               std::cout<<"entras en infinito de alu.cpp"<<std::endl;
+               numberR.setInfinito(true);
+               return numberR;
+           }*/
+           if ((numeroA.getExpo()<126 && numeroB.getExpo()>126)||(numeroA.getExpo()>126 && numeroB.getExpo()<126)){
+                  std::cout<<"entras en infinito de alu.cpp"<<std::endl;
+                  numberR.setInfinito(true);
+                  return numberR;
+              }
+
+            numberR.setNum(numberR.IEEtoFloat(numberR.getExpo(),numberR.getSing(),numberR.getPartFrac()));
+
+
+            std::cout<<"Resultado division:"<<std::endl;
+            std::cout<<"Signo: "<<numberR.getSing()<<std::endl;
+            std::cout<<"Exponente: "<<numberR.getExpoBit()<<std::endl;
+            std::cout<<"Parte Fraccionaria: "<<numberR.getPartFracBit()<<std::endl;
+       /* }else{
+
+        }*/
+    return numberR;
+    }
 
 
 
     int alu::esDenormal (numero num){
 
 
-        if(num.getExpoBit().to_string().compare("00000000")==0 && num.getPartFracBit().to_string().compare("00000000000000000000000")!=0)
+        if(num.getExpoBit().to_string().compare("00000000") == 0 && num.getPartFracBit().to_string().compare("00000000000000000000000") != 0)
         {
             return 1;
         }
             else
         {
-                 return -1;
-
-
+            return -1;
         }
     }
 
@@ -520,7 +672,7 @@
     std::bitset<24> alu::desplazarDerecha(std::bitset<24> p, int d, int bit)
     {
 
-        for(int i = 0; i < d; i++){
+        for(int j = 0; j < d; j++){
                 for(int i = 0; i < (int) (p.size() - 1); i++)
                     p.set(i, p[i+1]);
                 p.set((int) (p.size() - 1) , bit);
