@@ -257,9 +257,12 @@ void MainWindow::on_pushButtonDIVISION_released()
              return;
         }
         ui->lineEditResDec->setText(QString::number(numeroDivision.getNum()));
-        ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroDivision.getExpoBit().to_string()));
-        ui->lineEditRESIEEESIG->setText(QString::number(numeroDivision.getSing()));
-        ui->lineEditRESIEEEMAN->setText(QString::fromStdString(numeroDivision.getPartFracBit().to_string()));
+        float result = ui->lineEditResDec->text().toFloat();
+        numero aux(result);
+
+        ui->lineEditRESIEEEEXP->setText(QString::fromStdString(aux.getExpoBit().to_string()));
+        ui->lineEditRESIEEESIG->setText(QString::number(aux.getSing()));
+        ui->lineEditRESIEEEMAN->setText(QString::fromStdString(aux.getPartFracBit().to_string()));
 
        setHexaConversion();
        setHexaResultado();
