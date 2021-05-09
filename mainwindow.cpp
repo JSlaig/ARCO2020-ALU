@@ -51,6 +51,25 @@ void MainWindow::on_pushButtonSUMA_released()
 
         setConversion(numeroA,numeroB);
 
+        if(numeroSuma.getInfinito() == true){
+
+                    if(numeroSuma.getSing()==0){
+                        ui->lineEditResDec->setText("infinito");
+                    }else{
+                        ui->lineEditResDec->setText("-infinito");
+                    }
+                     ui->lineEditRESIEEEEXP->setText("11111111");
+                     ui->lineEditRESIEEESIG->setText(QString::number(numeroSuma.getSing()));
+                     ui->lineEditRESIEEEMAN->setText("00000000000000000000000");
+                     ui->lineEditResHEX->setText("");
+
+                     setHexaConversion();
+                     setHexaResultado();
+
+                     return;
+                }
+
+
         ui->lineEditResDec->setText(QString::number(numeroSuma.getNum()));
         ui->lineEditRESIEEEEXP->setText(QString::fromStdString(numeroSuma.getExpoBit().to_string()));
         ui->lineEditRESIEEESIG->setText(QString::number(numeroSuma.getSing()));

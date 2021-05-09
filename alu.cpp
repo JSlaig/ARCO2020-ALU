@@ -2,6 +2,8 @@
 #include<iostream>
 #include <tgmath.h>
 #include <stdlib.h>
+#define MAXIMO 254
+#define MINIMO 1
 
     alu::alu(){}
 
@@ -9,6 +11,7 @@
              // ===================================-SUMA-===================================
     numero alu::sumaIEE(numero numeroA, numero numeroB)
     {
+        //Alejadro
 
       // Aqui se almacenara el resultado d la suma
 
@@ -19,6 +22,19 @@
          *
          * Creacion de una variable bitset ->> std::bitset<24> nombreVar(int numeroAConvertir);
          */
+
+        if(numeroA.getExpo() > MAXIMO || numeroB.getExpo() > MAXIMO){
+
+                   /*Numero infinito*/
+                   std::cout << "NUMERO DETECTADO COMO INF" << std::endl;
+
+
+                   numero inf;
+                   inf.setInfinito(true);
+                   return inf;
+
+               }
+
         if(compruebaNumOpuestos(numeroA,numeroB)){
 
             numero numZero = numero(0);
@@ -83,6 +99,7 @@
         if(signoA!=signoB){
             mantisaB = complemento2(mantisaB);
         }
+        //MORLA
 
         /*Paso 5*/
         P=mantisaB;
@@ -116,7 +133,7 @@
 
 
         }
-
+        //CHEMA
         /*Paso 8 [Bien]*/
         std::cout << "paso 8, mantisaA-> " << mantisaA.to_string() << std::endl;
         std::cout << "paso 8, antes p-> " << P.to_string() << std::endl;
@@ -126,6 +143,9 @@
 
         std::cout << "paso 8, despues p-> " << P.to_string() << std::endl;
         /*Paso 9*/
+
+
+
         if(((signoA != signoB) && (P[n-1]) == 1) && (c == 0)){
             P = complemento2(P);
             Comple_P = true;
@@ -184,6 +204,8 @@
         }else{
             signoSuma = signoA;
         }
+
+        //CHECHU
 
         /*Paso 13*/
         //Suma = (SignoSuma) * MantisaSuma * 2Exp
@@ -258,6 +280,7 @@
         std::bitset<mantSize> P;
 
     // 1.
+        //CHECHU
         int signSol = 0;
 
         if(signA != signB){
@@ -272,6 +295,7 @@
         std::bitset<48> prod;
         prod = productoSinSigno(A, B,c);
         //3.2
+        //CHEMA
         if(!prod[47]){
             prod<<=1;
         } else {
@@ -286,6 +310,9 @@
             x--;
             sticky = sticky || prod[x];
         }
+
+        //JOSE
+
         //3.5
         if((round && sticky) || (round && !sticky && prod[24])){
             std::bitset<prod.size()> one;
@@ -492,10 +519,23 @@
             float escaladoB = 0.0;
 
             int power = 0;
-            for(int i = 23; i >= 0; i--){
+
+            /*for(int i = 23; i >= 0; i--){
                 escaladoA += (float) aproxA[i] * (float) pow(2.0, power);
                 escaladoB += (float) aproxB[i] * (float) pow(2.0, power);
                 power--;
+            }*/
+
+            /*CHEMA*/
+
+            for(int i = 23; i>= 0; i--){
+              if((int)aproxA[i] == 1){
+                escaladoA+=(float)pow(2.0, power);
+              }
+              if((int)aproxB[i] == 1){
+                escaladoB+=(float)pow(2.0, power);
+              }
+              power--;
             }
 
             std::cout<<"AproximadoA: "<<escaladoA<<std::endl;
@@ -514,7 +554,9 @@
 
             std::cout<<"InversoB:"<<inversoB<<std::endl;
 
-            //Metodo de goldsmitch (placeholder de lo que tiene que hacer)
+
+            //CHECHU
+            //Metodo de goldsmitch
 
             numero escaladoIEEA(escaladoA);
 
@@ -583,6 +625,8 @@
             numberR.setPartFrac(xSiguiente.getPartFrac());
             numberR.setPartFracBit(xSiguiente.getPartFrac());
 
+            //MORLA
+
             //Paso 3: Calculo del signo de la division
             if(numberA.getSing() == 0 && numberB.getSing() == 0){
                 numberR.setSing(0);
@@ -606,7 +650,7 @@
             numero expoA(numeroA.getExpo());
             numero op1 = alu::sumaIEE(expoA, expoB);
 
-            //resultado + (A * 1/B)
+            //resultado + EXP(A * 1/B)
             numero expoProd(xSiguiente.getExpo());
             numero op2 = alu::sumaIEE(op1, expoProd);
 
@@ -615,11 +659,13 @@
             std::cout<<"exponente numero A: "<<numeroA.getExpo()<<std::endl;
             std::cout<<"exponente numero B: "<<numeroB.getExpo()<<std::endl;
             std::cout<<"exponente numero Resultado: "<<numberR.getExpo()<<std::endl;
+
           /* if (numeroA.getExpo() + numeroB.getExpo() >255){
                std::cout<<"entras en infinito de alu.cpp"<<std::endl;
                numberR.setInfinito(true);
                return numberR;
            }*/
+
            if ((numeroA.getExpo()<126 && numeroB.getExpo()>126)||(numeroA.getExpo()>126 && numeroB.getExpo()<126)){
                   std::cout<<"entras en infinito de alu.cpp"<<std::endl;
                   numberR.setInfinito(true);
@@ -886,7 +932,7 @@ std::string alu::hexadecimal(std::string cadena){
     //Acarreo Suma
     bool alu::acarreo(bool a, bool b, bool& c){
         bool sum = (a ^ b) ^ c;
-        c = (a && b) || (a && c) || (a && c);
+        c = (a && b) || (a && c) || (b && c);
         return sum;
     }
     //metodos nuevos
@@ -926,7 +972,7 @@ std::string alu::hexadecimal(std::string cadena){
     bool alu::sumaAuxiliar(std::bitset<24>& a, const std::bitset<24>& b){
         bool c = false;
         for (int i = 0; i < 24; i++){
-            a[i] = acarreo(b[i], b[i], c);
+            a[i] = acarreo(a[i], b[i], c);
         }
         return c;
     }
