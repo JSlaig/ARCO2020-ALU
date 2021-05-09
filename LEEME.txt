@@ -8,7 +8,7 @@ Practica 4 de Arquitectura de Computadores en UniLeon, creacion de simulador de 
 INTEGRANTES DEL GRUPO:
 
 Alejandro Gonzalez Marne.
-Jose Manuel Morla Prieto.
+Jose Manuel Morla Prieto. DNI: 71747899C
 Jesús Salinero Guzmán
 Jose Maria Villafañe Marcos. DNI: 09807478W
 
