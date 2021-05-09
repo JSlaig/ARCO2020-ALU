@@ -38,10 +38,10 @@ public:
     std::string conversorBinarioHexadecimal(std::string binario);
     bool compruebaNumOpuestos(numero numeroA, numero numeroB);
 
-     std::bitset<48> productoSinSigno(std::bitset<24>& x, const std::bitset<24>& y, bool &c);
-    bool acarreo(bool b1, bool b2, bool& c);
-    bool sumaAuxiliar(std::bitset<48>& x, const std::bitset<48>& y);
-    bool sumaAuxiliar(std::bitset<24>& x, const std::bitset<24>& y);
+     std::bitset<48> productoSinSigno(std::bitset<24>& a, const std::bitset<24>& b, bool &c);
+    bool acarreo(bool a, bool b, bool& c);
+    bool sumaAuxiliar(std::bitset<48>& a, const std::bitset<48>& b);
+    bool sumaAuxiliar(std::bitset<24>& a, const std::bitset<24>& b);
     int compruebaDenormal(int);
 
     bool compruebaCero(numero numeroA, numero numeroB);

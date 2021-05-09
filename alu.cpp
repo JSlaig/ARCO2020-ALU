@@ -884,21 +884,21 @@ std::string alu::hexadecimal(std::string cadena){
     }
 
     //Acarreo Suma
-    bool alu::acarreo(bool b1, bool b2, bool& c){
-        bool sum = (b1 ^ b2) ^ c;
-        c = (b1 && b2) || (b1 && c) || (b2 && c);
+    bool alu::acarreo(bool a, bool b, bool& c){
+        bool sum = (a ^ b) ^ c;
+        c = (a && b) || (a && c) || (a && c);
         return sum;
     }
     //metodos nuevos
          //Multiplicacion
-         std::bitset<48> alu::productoSinSigno(std::bitset<24>& x, const std::bitset<24>& y, bool &c){
+         std::bitset<48> alu::productoSinSigno(std::bitset<24>& a, const std::bitset<24>& b, bool &c){
 
              std::bitset<24> P;
              std::bitset<48> result;
              for ( int i = 0; i<24;i++){
-                 if(x[0]) c = sumaAuxiliar(P, y);
-                 x >>= 1;
-                 x[23] = P[0];
+                 if(a[0]) c = sumaAuxiliar(P, b);
+                 a >>= 1;
+                 a[23] = P[0];
                  P >>= 1;
                  P[23] = c;
                  c >>= 1;
@@ -906,7 +906,7 @@ std::string alu::hexadecimal(std::string cadena){
              }
 
              for(int i = 0; i<24; i++){
-                 result[i]=x[i];
+                 result[i]=a[i];
                  result[i+24]= P[i];
              }
              return result;      //sobran los 2 primeros
@@ -914,19 +914,19 @@ std::string alu::hexadecimal(std::string cadena){
 
     // diversas sumas
 
-    bool alu::sumaAuxiliar(std::bitset<48>& x, const std::bitset<48>& y){
+    bool alu::sumaAuxiliar(std::bitset<48>& a, const std::bitset<48>& b){
         bool c = false;
         for (int i = 0; i < 24; i++){
-            x[i] = acarreo(x[i], y[i], c);
+            a[i] = acarreo(a[i], b[i], c);
         }
         return c;
     }
 
 
-    bool alu::sumaAuxiliar(std::bitset<24>& x, const std::bitset<24>& y){
+    bool alu::sumaAuxiliar(std::bitset<24>& a, const std::bitset<24>& b){
         bool c = false;
         for (int i = 0; i < 24; i++){
-            x[i] = acarreo(x[i], y[i], c);
+            a[i] = acarreo(b[i], b[i], c);
         }
         return c;
     }
