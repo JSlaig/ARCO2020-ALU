@@ -1,0 +1,32 @@
+
+
+
+
+UNIDAD ARITMÉTICO LÓGICA
+Practica 4 de Arquitectura de Computadores en UniLeon, creacion de simulador de Unidad Aritmetico Logica.
+
+INTEGRANTES DEL GRUPO:
+
+Alejandro Gonzalez Marne.
+Jose Manuel Morla Prieto.
+Jesús Salinero Guzmán
+Jose Maria Villafañe Marcos. DNI: 09807478W
+
+Simulacion de operaciones basicas de una ALU 
+- Suma 			
+- Multiplicacion 	
+- Division 	
+
+El Programa ha sido compilado y testeado bajo Windows 10 x64 y sobre ubuntu 20.04
+
+## Compilacion
+Compilar desde Qt cargandolo con el archivo .pro
+
+## Usage
+Introducir los numeros decimales deseados en los campos correspondientes y hacer click sobre la operacion a realizar
+El separador de decimales es un punto "." 
+
+Operador1 + Operador2 = Resultado
+Operador1 * Operador2 = Resultado
+Operador1 / Operador2 = Resultado
+
