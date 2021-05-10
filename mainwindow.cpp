@@ -157,6 +157,7 @@ void MainWindow::on_pushButtonPRODUCTO_released()
         setHexaResultado();
 
         }else{
+        setHexaConversion();
         ui->lineEditResDec->setText("NaN");
         ui->lineEditRESIEEEEXP->setText("--------");
         ui->lineEditRESIEEESIG->setText("-");
