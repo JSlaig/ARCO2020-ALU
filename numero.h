@@ -56,7 +56,7 @@ public:
 
 private:
 
-
+        /*Estructura del Union para la conversion de numeros*/
     union Code {
 
         struct{
@@ -70,6 +70,8 @@ private:
 
     }numero_type;
 
+
+    /*Estructura de tipo numero que usamos para operar en la ALU*/
     struct numIEE{
 
         unsigned int partFrac : 23;

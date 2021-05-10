@@ -222,7 +222,7 @@
 
         std::cout << mantisaToPartFrac(mantisaSuma) <<std::endl;
 
-        /********************************************/
+        /*********************Seteo del resultado final y, devolucion del tipo numero***********************/
 
         std::cout << "Resultadooooooooooooo final" <<std::endl;
 
@@ -242,6 +242,7 @@
     }
 
          // ===================================-MULTIPLICACION-===================================
+
     numero alu::productoIEE(numero numeroA, numero numeroB){
         std::bitset<23> partefraccionaria;
         int t = 0;
@@ -492,7 +493,8 @@
     }
 
 
-    //division
+    // ===================================-DIVISION-===================================
+
     numero alu::divisionIEE(numero numeroA, numero numeroB){
 
         numero numberA = numeroA;
@@ -505,7 +507,6 @@
                     numberR.setIndeterminado(true);
                     return numberR;
                 }
-       // if(esDenormal(numberA) == -1 && esDenormal(numberB) == -1){
 
 
             //Paso 1: Escalado de los numeros
@@ -519,12 +520,6 @@
             float escaladoB = 0.0;
 
             int power = 0;
-
-            /*for(int i = 23; i >= 0; i--){
-                escaladoA += (float) aproxA[i] * (float) pow(2.0, power);
-                escaladoB += (float) aproxB[i] * (float) pow(2.0, power);
-                power--;
-            }*/
 
             /*CHEMA*/
 
@@ -679,13 +674,12 @@
             std::cout<<"Signo: "<<numberR.getSing()<<std::endl;
             std::cout<<"Exponente: "<<numberR.getExpoBit()<<std::endl;
             std::cout<<"Parte Fraccionaria: "<<numberR.getPartFracBit()<<std::endl;
-       /* }else{
 
-        }*/
     return numberR;
     }
 
 
+/*=======================-Metodos auxiliares utilizados en el codigo-=================*/
 
     int alu::esDenormal (numero num){
 
