@@ -259,7 +259,7 @@
                 numero zero = numero(0);
                 return zero;
         }
-
+        // Hallamos la mantisa de los dos operandos
         std::bitset<24> A;
         for(int i = 0; i<23; i++){
             A[i]=numeroA.getPartFracBit()[i];
@@ -272,6 +272,8 @@
         }
         B[B.size()-1] = 1;
 
+        //Obtenemos el exponente y el signo de los operandos
+
         int expA = numeroA.getExpoBit().to_ulong();
         int expB = numeroB.getExpoBit().to_ulong();
         int signA = numeroA.getSing();
@@ -282,6 +284,7 @@
 
     // 1.
         //CHECHU
+        // obtenemos el signo del producto de la misma forma que en la multi de decimales
         int signSol = 0;
 
         if(signA != signB){
@@ -289,22 +292,29 @@
         }
         std::cout<<"signo de la solucion: "<<signSol<<std::endl;
     // 2.
+        //
         int expSol = expA-127 + expB-127;
     // 3.
+        // Calculamos la mantisa del producto
         //3.1
         bool c;
         std::bitset<48> prod;
+        // usamos el algoritmo del producto sin signo
         prod = productoSinSigno(A, B,c);
         //3.2
         //CHEMA
+        // Desplazamos un bit a la izquierda si se cumple la condicion, en caso contrario
+        // actualizamos exponente.
         if(!prod[47]){
             prod<<=1;
         } else {
             expSol++;
         }
         //3.3
+        // calculamos el bit de redondeo
         bool round = prod[23];
         //3.4
+        // calculamos el bit de sticky
         int x = 23;
         bool sticky;
         while (x > 0){
@@ -313,11 +323,12 @@
         }
 
         //JOSE
-
+         // Hacemos el redondeo
         //3.5
         if((round && sticky) || (round && !sticky && prod[24])){
             std::bitset<prod.size()> one;
             one.set(0, 1);
+
             sumaAuxiliar(prod, one);
         }
 
@@ -326,7 +337,7 @@
         for(int i = 0; i<24; i++){
             manSol[i] = prod[i+24];
         }
-
+        // en caso de que el producto sea infinito
         if(expSol>128){
                     expSol=128;
                     prod.reset();
@@ -341,7 +352,7 @@
         if (expSol <-126){
             std::cout<<"resultado denormal"<<std::endl;
             t = expMinimo - expSol;
-
+            // para los Nan
 
             if (t >= (int)manSol.size()){
                 numero indeterminado;
@@ -466,6 +477,8 @@
         for (int i = 0; i <23; i++){
             partefraccionaria[i] = manSol[i];
         }
+        // obtenemos el resultado, en el caso de que el numero sea "normal".
+        // si no lo es, obtendriamos un numero de los anteriormente citados.
         numero resultado;
 
         float numero1 = numeroA.getNum();
