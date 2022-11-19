@@ -5,13 +5,6 @@
 UNIDAD ARITMÉTICO LÓGICA
 Practica 4 de Arquitectura de Computadores en UniLeon, creacion de simulador de Unidad Aritmetico Logica.
 
-INTEGRANTES DEL GRUPO:
-
-Alejandro Gonzalez Marne. DNI: 71479934M
-Jose Manuel Morla Prieto. DNI: 71747899C
-Jesús Salinero Guzmán. DNI: 71458196W
-Jose Maria Villafañe Marcos. DNI: 09807478W
-
 Simulacion de operaciones basicas de una ALU 
 - Suma 			
 - Multiplicacion 	
